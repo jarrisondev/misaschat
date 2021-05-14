@@ -1,6 +1,6 @@
 import { FormStyled } from './styles'
 
-export const SignIn = (props) => {
+export const SignIn = ({ setData }) => {
 	return (
 		<FormStyled>
 			<label>
@@ -11,8 +11,6 @@ export const SignIn = (props) => {
 				<img src='/icons/Login/password.svg' alt='' />
 				<input type='password' placeholder='Contraseña' />
 			</label>
-			<button type='button'>Ingresar</button>
-			<p>Registrarse</p>
 		</FormStyled>
 	)
 }

@@ -1,10 +1,21 @@
-import { Container } from './styles'
+import { LoginStyled } from './styles'
+import { useState } from 'react'
+import { Button } from '../globals-components/Button'
+import { Anchor } from '../globals-components/Anchor'
 import { SignIn } from './Forms/SignIn'
+import { SignUp } from './Forms/SignUp'
 
 export const Login = () => {
+	let initialData = {
+		email: '',
+		name: '',
+		password: '',
+	}
+	const [userData, setUserData] = useState(initialData)
+	const [formToken, setFormToken] = useState(true)
 	return (
 		<>
-			<Container>
+			<LoginStyled>
 				<div>
 					<h1>Bienvenido a misasChats</h1>
 					<p>
@@ -12,8 +23,18 @@ export const Login = () => {
 						todo su potencial.
 					</p>
 				</div>
-				<SignIn />
-			</Container>
+				<form>
+					{formToken ? (
+						<SignIn setData={setUserData} />
+					) : (
+						<SignUp setData={setUserData} />
+					)}
+					<br />
+					<Anchor handler={setFormToken} token={formToken} />
+					<br />
+					<Button token={formToken} />
+				</form>
+			</LoginStyled>
 		</>
 	)
 }
