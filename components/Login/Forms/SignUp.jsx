@@ -1,22 +1,10 @@
 import { FormStyled } from './styles'
 
-export const SignUp = ({ setData }) => {
-	let initialUserData = {
-		name: null,
-		email: null,
-		password: null,
-	}
-
+export const SignUp = ({ setUserData, userData }) => {
 	const saveUserData = (e) => {
 		let target = e.target
 
-		if (target.type === 'name') {
-			console.log(target.value)
-		} else if (target.type === 'email') {
-			console.log(target.value)
-		} else {
-			console.log(target.value)
-		}
+		setUserData({ ...userData, [target.name]: target.value })
 	}
 
 	return (
@@ -24,7 +12,8 @@ export const SignUp = ({ setData }) => {
 			<label>
 				<img src='/icons/Login/user.svg' alt='user icon' />
 				<input
-					onBlur={(event) => saveUserData(event)}
+					name='name'
+					onChange={(event) => saveUserData(event)}
 					type='text'
 					placeholder='Nombre'
 					required
@@ -33,7 +22,8 @@ export const SignUp = ({ setData }) => {
 			<label>
 				<img src='/icons/Login/email.svg' alt='email icon' />
 				<input
-					onBlur={(event) => saveUserData(event)}
+					name='email'
+					onChange={(event) => saveUserData(event)}
 					type='email'
 					placeholder='email@example.com'
 					required
@@ -42,7 +32,8 @@ export const SignUp = ({ setData }) => {
 			<label>
 				<img src='/icons/Login/password.svg' alt='password' />
 				<input
-					onBlur={(event) => saveUserData(event)}
+					name='password'
+					onChange={(event) => saveUserData(event)}
 					type='password'
 					placeholder='Contraseña'
 					required

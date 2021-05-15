@@ -1,14 +1,24 @@
-import userModel from '../../mongoDB/models/user.model'
+import UserModel from '../../mongoDB/models/user.model'
 import { connection } from 'mongoose'
 import { connectDB } from '../../mongoDB/connect'
-connectDB()
 
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
-		let data = req.body
-		console.log(data)
+		connectDB()
+
+		let { name, email, password } = req.body
+
+		const newUser = new UserModel({
+			name,
+			email,
+			password,
+		})
+
+		await newUser.save().then(() => {
+			res.status(200).json()
+			connection.close()
+		})
 	} else {
-		res.status(200).json({ message: 'Only POST method' })
+		res.status(401).json({ message: 'Only POST method' })
 	}
-	connection.close()
 }

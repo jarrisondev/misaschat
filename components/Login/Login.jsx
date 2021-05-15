@@ -15,7 +15,7 @@ export const Login = () => {
 	const [formToken, setFormToken] = useState(true)
 	return (
 		<>
-			<LoginStyled>
+			<LoginStyled method='POST'>
 				<div>
 					<h1>Bienvenido a misasChats</h1>
 					<p>
@@ -25,14 +25,19 @@ export const Login = () => {
 				</div>
 				<form>
 					{formToken ? (
-						<SignIn setData={setUserData} />
+						<SignIn setUserData={setUserData} userData={userData} />
 					) : (
-						<SignUp setData={setUserData} />
+						<SignUp setUserData={setUserData} userData={userData} />
 					)}
 					<br />
 					<Anchor handler={setFormToken} token={formToken} />
 					<br />
-					<Button token={formToken} />
+					<Button
+						token={formToken}
+						userData={userData}
+						setUserData={setUserData}
+						initialData={initialData}
+					/>
 				</form>
 			</LoginStyled>
 		</>
