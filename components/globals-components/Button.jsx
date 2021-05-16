@@ -1,5 +1,3 @@
-import { connection } from 'mongoose'
-
 export const Button = ({ token, userData, setUserData, initialData }) => {
 	let text = token ? 'Ingresar' : 'Registrarse'
 
@@ -18,11 +16,12 @@ export const Button = ({ token, userData, setUserData, initialData }) => {
 				body: JSON.stringify(userData),
 			})
 
-			console.log(req)
-
 			if (req.ok) {
 				e.target.parentNode.reset()
 				setUserData(initialData)
+				location.reload()
+			} else {
+				alert('El correo ya se encuentra registrado')
 			}
 		} else {
 			alert('Rellene los campos')
