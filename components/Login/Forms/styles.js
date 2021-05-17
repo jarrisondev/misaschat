@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const FormStyled = styled.div`
+export const FormStyled = styled.form`
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: 50%;
+	height: 100%;
 
 	justify-content: space-around;
 	width: 80%;
@@ -15,7 +15,7 @@ export const FormStyled = styled.div`
 		border-radius: 5px;
 		display: flex;
 
-		height: 25%;
+		height: 15%;
 		width: 100%;
 
 		img {
@@ -35,6 +35,30 @@ export const FormStyled = styled.div`
 			&::placeholder {
 				font-size: 1.1rem;
 			}
+		}
+	}
+
+	p {
+		font-size: 1.2rem;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	button {
+		background-color: #31ff6c;
+		border: none;
+		border-radius: 20px;
+		color: white;
+
+		cursor: pointer;
+		font-size: 1.2rem;
+		font-weight: 700;
+		height: 13%;
+
+		width: 50%;
+
+		&:hover {
+			background: #11c054;
 		}
 	}
 `

@@ -1,4 +1,4 @@
-import UserModel from '../../mongoDB/models/user.model'
+import UserModel from '../../models/user.model'
 import { connection } from 'mongoose'
 import { connectDB } from '../../mongoDB/connect'
 
