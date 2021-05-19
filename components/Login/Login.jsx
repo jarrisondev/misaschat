@@ -1,14 +1,26 @@
 import { LoginStyled } from './styles'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SignIn } from './Forms/SignIn'
 import { SignUp } from './Forms/SignUp'
+import { useRouter } from 'next/router'
+import { userContext } from '../../context/userContext'
 
 export const Login = () => {
+	const { user } = useContext(userContext)
 	const [formToken, setFormToken] = useState(true)
+	const router = useRouter()
 
+	useEffect(() => {
+		const userToken = localStorage.getItem('login')
+
+		if (userToken) {
+			user.setUserData(JSON.parse(userToken))
+			router.push('/dashboard')
+		}
+	}, [])
 	return (
 		<>
-			<LoginStyled method='POST'>
+			<LoginStyled>
 				<div>
 					<h1>Bienvenido a misasChats</h1>
 					<p>

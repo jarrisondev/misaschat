@@ -1,4 +1,5 @@
 import { FormStyled } from './styles'
+import { useRouter } from 'next/router'
 import { Button } from '../../globals-components/Button'
 import { Anchor } from '../../globals-components/Anchor'
 import { signInController } from '../../../controllers/signInController'
@@ -6,11 +7,12 @@ import { useContext } from 'react'
 import { userContext } from '../../../context/userContext'
 
 export const SignIn = ({ formToken, setFormToken }) => {
+	const router = useRouter()
 	const { user } = useContext(userContext)
 
 	const sendUserData = (event) => {
 		event.preventDefault()
-		signInController(user, event)
+		signInController(user, event, router)
 	}
 	const saveData = (event) => {
 		const input = event.target
