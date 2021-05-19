@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
 			await newUser.save().then(async () => {
 				await connection.close().then(() => console.log('database closed'))
-				res.status(200).json({ message: 'user register successfully' })
+				res.status(201).json({ message: 'user register successfully' })
 			})
 		} else {
 			await connection.close().then(() => console.log('database closed'))
