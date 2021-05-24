@@ -9,7 +9,7 @@ export const signInController = async (user, event, router) => {
 		res.json().then((data) => {
 			user.setUserData(data)
 			localStorage.getItem('login')
-				? console.log('entra')
+				? null
 				: localStorage.setItem('login', JSON.stringify(data))
 		})
 		event.target.parentNode.reset()
