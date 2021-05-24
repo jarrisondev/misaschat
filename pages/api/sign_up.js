@@ -1,19 +1,21 @@
-import UserModel from '../../models/user.model'
+import userModel from '../../models/user.model'
 import { connection } from 'mongoose'
 import { connectDB } from '../../mongoDB/connect'
+import { genSalt, hash } from 'bcrypt'
 
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
 		connectDB()
 
 		const { name, email, password } = req.body
-		const result = await UserModel.find({ email })
+		const result = await userModel.find({ email })
 
 		if (result.length === 0) {
+			const salt = await genSalt(10)
 			const newUser = new UserModel({
 				name,
 				email,
-				password,
+				password: await hash(password, salt),
 			})
 
 			await newUser.save().then(async () => {
