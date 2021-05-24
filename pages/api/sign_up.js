@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
 		if (result.length === 0) {
 			const salt = await genSalt(10)
-			const newUser = new UserModel({
+			const newUser = new userModel({
 				name,
 				email,
 				password: await hash(password, salt),
