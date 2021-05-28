@@ -6,15 +6,13 @@ export const signInController = async (user, event, router) => {
 	})
 
 	if (res.ok) {
-		res.json().then((data) => {
-			user.setUserData(data)
-			localStorage.getItem('login')
-				? null
-				: localStorage.setItem('login', JSON.stringify(data))
+		res.json().then((token) => {
+			sessionStorage.setItem('login', JSON.stringify(token))
+			user.setUserData(token)
 		})
 		event.target.parentNode.reset()
 		router.push('/dashboard')
 	} else {
-		alert('Datos invalidos')
+		res.json().then((res) => alert(res.message))
 	}
 }
