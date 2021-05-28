@@ -8,9 +8,9 @@ export const signInController = async (user, event, router) => {
 	if (res.ok) {
 		res.json().then((token) => {
 			sessionStorage.setItem('login', JSON.stringify(token))
+			event.target.parentNode.reset()
+			router.push('/dashboard')
 		})
-		event.target.parentNode.reset()
-		router.push('/dashboard')
 	} else {
 		res.json().then((res) => alert(res.message))
 	}

@@ -18,7 +18,9 @@ export default async function handler(req, res) {
 					email: user.email,
 				}
 				await connection.close().then(() => console.log('database closed'))
-				const token = sign(userForToken, process.env.JWT_SIGN)
+				const token = sign(userForToken, process.env.JWT_SIGN, {
+					expiresIn: '31d',
+				})
 				res.status(200).json({ token })
 			} else {
 				await connection.close().then(() => console.log('database closed'))
