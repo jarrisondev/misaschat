@@ -6,7 +6,7 @@ import { signInController } from '../../../controllers/signInController'
 import { useContext } from 'react'
 import { userContext } from '../../../context/userContext'
 
-export const SignIn = ({ formToken, setFormToken }) => {
+export const SignIn = ({ renderForm, setRenderForm }) => {
 	const router = useRouter()
 	const { user } = useContext(userContext)
 
@@ -40,8 +40,8 @@ export const SignIn = ({ formToken, setFormToken }) => {
 					placeholder='Contraseña'
 				/>
 			</label>
-			<Anchor token={formToken} handler={setFormToken} />
-			<Button token={formToken} handler={sendUserData} />
+			<Anchor renderForm={renderForm} handler={setRenderForm} />
+			<Button renderForm={renderForm} handler={sendUserData} />
 		</FormStyled>
 	)
 }

@@ -1,4 +1,9 @@
-export const registerUserController = async (event, token, setToken, user) => {
+export const signUpController = async (
+	event,
+	renderForm,
+	setRenderForm,
+	user
+) => {
 	const res = await fetch('/api/sign_up', {
 		method: 'POST',
 		headers: new Headers([['Content-type', 'application/json']]),
@@ -8,8 +13,8 @@ export const registerUserController = async (event, token, setToken, user) => {
 	if (res.ok) {
 		event.target.parentNode.reset()
 		user.setUserData(user.initialUserData)
-		setToken(!token)
+		setRenderForm(!renderForm)
 	} else {
-		alert('El correo ya se encuentra registrado')
+		res.json().then((res) => alert(res.message))
 	}
 }

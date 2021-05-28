@@ -1,5 +1,5 @@
-export const Anchor = ({ handler, token }) => {
-	let text = token ? 'Registrarse' : 'Iniciar Sesión'
+export const Anchor = ({ handler, renderForm }) => {
+	let text = renderForm ? 'Registrarse' : 'Iniciar Sesión'
 
-	return <p onClick={() => handler(!token)}>{text}</p>
+	return <p onClick={() => handler(!renderForm)}>{text}</p>
 }

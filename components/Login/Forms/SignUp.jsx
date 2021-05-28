@@ -2,10 +2,10 @@ import { FormStyled } from './styles'
 import { Button } from '../../globals-components/Button'
 import { Anchor } from '../../globals-components/Anchor'
 import { useContext, useState } from 'react'
-import { registerUserController } from '../../../controllers/registerUserController'
+import { signUpController } from '../../../controllers/signUpController'
 import { userContext } from '../../../context/userContext'
 
-export const SignUp = ({ formToken, setFormToken }) => {
+export const SignUp = ({ renderForm, setRenderForm }) => {
 	const { user } = useContext(userContext)
 
 	let initialInputsCheck = {
@@ -19,7 +19,7 @@ export const SignUp = ({ formToken, setFormToken }) => {
 		event.preventDefault()
 		if (inputsCheck.name && inputsCheck.email && inputsCheck.password) {
 			// this is a controller
-			registerUserController(event, formToken, setFormToken, user)
+			signUpController(event, renderForm, setRenderForm, user)
 		} else {
 			alert('datos incorrectos')
 		}
@@ -83,8 +83,8 @@ export const SignUp = ({ formToken, setFormToken }) => {
 					maxLength='12'
 				/>
 			</label>
-			<Anchor token={formToken} handler={setFormToken} />
-			<Button token={formToken} handler={saveUserData} />
+			<Anchor renderForm={renderForm} handler={setRenderForm} />
+			<Button renderForm={renderForm} handler={saveUserData} />
 		</FormStyled>
 	)
 }

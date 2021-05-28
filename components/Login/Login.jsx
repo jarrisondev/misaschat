@@ -7,16 +7,11 @@ import { userContext } from '../../context/userContext'
 
 export const Login = () => {
 	const { user } = useContext(userContext)
-	const [formToken, setFormToken] = useState(true)
+	const [renderForm, setRenderForm] = useState(true)
 	const router = useRouter()
 
 	useEffect(() => {
-		const userToken = localStorage.getItem('login')
-
-		if (userToken) {
-			user.setUserData(JSON.parse(userToken))
-			router.push('/dashboard')
-		}
+		sessionStorage.getItem('login') && router.push('/dashboard')
 	}, [])
 	return (
 		<>
@@ -29,10 +24,10 @@ export const Login = () => {
 					</p>
 				</div>
 				<div>
-					{formToken ? (
-						<SignIn formToken={formToken} setFormToken={setFormToken} />
+					{renderForm ? (
+						<SignIn renderForm={renderForm} setRenderForm={setRenderForm} />
 					) : (
-						<SignUp formToken={formToken} setFormToken={setFormToken} />
+						<SignUp renderForm={renderForm} setRenderForm={setRenderForm} />
 					)}
 				</div>
 			</LoginStyled>
