@@ -8,7 +8,6 @@ export const signInController = async (user, event, router) => {
 	if (res.ok) {
 		res.json().then((token) => {
 			sessionStorage.setItem('login', JSON.stringify(token))
-			user.setUserData(token)
 		})
 		event.target.parentNode.reset()
 		router.push('/dashboard')
