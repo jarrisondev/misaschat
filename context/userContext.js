@@ -9,12 +9,17 @@ export const UserContext = ({ children }) => {
 		password: '',
 	}
 	const [userData, setUserData] = useState(initialUserData)
+	const [contactsData, setContactsData] = useState([])
 
 	const providerValue = {
 		user: {
 			userData,
 			setUserData,
 			initialUserData,
+		},
+		contacts: {
+			contactsData,
+			setContactsData,
 		},
 	}
 
