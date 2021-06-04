@@ -6,7 +6,8 @@ import { compare } from 'bcrypt'
 
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
-		connectDB()
+		await connectDB()
+
 		const { email, password } = req.body
 		const user = (await userModel.findOne({ email })) || { password: '' }
 

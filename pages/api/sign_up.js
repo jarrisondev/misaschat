@@ -5,7 +5,7 @@ import { genSalt, hash } from 'bcrypt'
 
 export default async function handler(req, res) {
 	if (req.method === 'POST') {
-		connectDB()
+		await connectDB()
 
 		const { name, email, password } = req.body
 		const result = await userModel.find({ email })
