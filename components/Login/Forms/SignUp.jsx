@@ -11,7 +11,7 @@ export const SignUp = ({ renderForm, setRenderForm }) => {
   const initialInputsCheck = {
     name: false,
     email: false,
-    password: false,
+    password: false
   }
   const [inputsCheck, setInputsCheck] = useState(initialInputsCheck)
   // const [handlerButton, setHandlerButton] = useState(true)

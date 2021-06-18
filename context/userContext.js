@@ -24,8 +24,8 @@ export const UserContext = ({ children }) => {
   }
 
   return (
-		<userContext.Provider value={providerValue}>
-			{children}
-		</userContext.Provider>
+    <userContext.Provider value={providerValue}>
+      {children}
+    </userContext.Provider>
   )
 }

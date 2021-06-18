@@ -3,8 +3,8 @@ import userModel from '../../models/user.model'
 import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 
-export default async function get_users (req, res) {
-  if ((req.method = 'GET')) {
+export default async function getUsers(req, res) {
+  if (req.method === 'GET') {
     const { authorization } = req.headers
     const token = authorization.substring(7)
 
