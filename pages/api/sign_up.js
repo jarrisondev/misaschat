@@ -3,30 +3,30 @@ import { connection } from 'mongoose'
 import { connectDB } from '../../mongoDB/connect'
 import { genSalt, hash } from 'bcrypt'
 
-export default async function handler(req, res) {
-	if (req.method === 'POST') {
-		await connectDB()
+export default async function handler (req, res) {
+  if (req.method === 'POST') {
+    await connectDB()
 
-		const { name, email, password } = req.body
-		const result = await userModel.find({ email })
+    const { name, email, password } = req.body
+    const result = await userModel.find({ email })
 
-		if (result.length === 0) {
-			const salt = await genSalt(10)
-			const newUser = new userModel({
-				name,
-				email,
-				password: await hash(password, salt),
-			})
+    if (result.length === 0) {
+      const salt = await genSalt(10)
+      const newUser = new userModel({
+        name,
+        email,
+        password: await hash(password, salt)
+      })
 
-			await newUser.save().then(async () => {
-				await connection.close().then(() => console.log('database closed'))
-				res.status(201).json({ message: 'user register successfully' })
-			})
-		} else {
-			await connection.close().then(() => console.log('database closed'))
-			res.status(406).json({ message: 'user already exists' })
-		}
-	} else {
-		res.status(401).json({ message: 'Only POST method' })
-	}
+      await newUser.save().then(async () => {
+        await connection.close().then(() => console.log('database closed'))
+        res.status(201).json({ message: 'user register successfully' })
+      })
+    } else {
+      await connection.close().then(() => console.log('database closed'))
+      res.status(406).json({ message: 'user already exists' })
+    }
+  } else {
+    res.status(401).json({ message: 'Only POST method' })
+  }
 }

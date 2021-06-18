@@ -1,9 +1,9 @@
 export const Button = ({ renderForm, handler }) => {
-	let text = renderForm ? 'Ingresar' : 'Registrarse'
+  const text = renderForm ? 'Ingresar' : 'Registrarse'
 
-	return (
-		<button onClick={(event) => handler(event)} type='submit'>
-			{text}
-		</button>
-	)
+  return (
+    <button onClick={(event) => handler(event)} type='submit'>
+      {text}
+    </button>
+  )
 }
