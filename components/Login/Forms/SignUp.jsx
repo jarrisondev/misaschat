@@ -1,6 +1,6 @@
 import {FormStyled} from './styles'
-import {Button} from 'components/globals-components/Button'
-import {Anchor} from 'components/globals-components/Anchor'
+import {Button} from 'components/globals-components/Button/Button'
+import {Anchor} from 'components/globals-components/Anchor/Anchor'
 import {useState} from 'react'
 import {signUpController} from 'controllers/loginController'
 
