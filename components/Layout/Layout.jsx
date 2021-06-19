@@ -1,10 +1,5 @@
-import { UserContext } from '../../context/userContext'
-import { LayoutStyled } from './styles'
+import {LayoutStyled} from './styles'
 
-export const Layout = ({ children }) => {
-  return (
-    <UserContext>
-      <LayoutStyled>{children}</LayoutStyled>
-    </UserContext>
-  )
+export const Layout = ({children}) => {
+	return <LayoutStyled>{children}</LayoutStyled>
 }
