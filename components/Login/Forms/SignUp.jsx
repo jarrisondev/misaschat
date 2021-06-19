@@ -1,8 +1,8 @@
 import {FormStyled} from './styles'
-import {Button} from '../../globals-components/Button'
-import {Anchor} from '../../globals-components/Anchor'
+import {Button} from 'components/globals-components/Button'
+import {Anchor} from 'components/globals-components/Anchor'
 import {useState} from 'react'
-import {signUpController} from '../../../controllers/loginController'
+import {signUpController} from 'controllers/loginController'
 
 export const SignUp = ({user, renderForm, setRenderForm}) => {
 	const initialInputsCheck = {

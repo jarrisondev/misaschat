@@ -1,8 +1,8 @@
 import {FormStyled} from './styles'
 import {useRouter} from 'next/router'
-import {Button} from '../../globals-components/Button'
-import {Anchor} from '../../globals-components/Anchor'
-import {signInController} from '../../../controllers/loginController'
+import {Button} from 'components/globals-components/Button'
+import {Anchor} from 'components/globals-components/Anchor'
+import {signInController} from 'controllers/loginController'
 
 export const SignIn = ({user, renderForm, setRenderForm}) => {
 	const router = useRouter()
