@@ -1,8 +1,9 @@
 import {FormStyled} from './styles'
 import {Button} from 'components/globals-components/Button/Button'
 import {Anchor} from 'components/globals-components/Anchor/Anchor'
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import {signUpController} from 'controllers/loginController'
+import {UtilContext} from 'context/utilsContext'
 
 export const SignUp = ({user, renderForm, setRenderForm}) => {
 	const initialInputsCheck = {
@@ -10,6 +11,7 @@ export const SignUp = ({user, renderForm, setRenderForm}) => {
 		email: false,
 		password: false,
 	}
+	const {handlerModalData} = useContext(UtilContext)
 	const [inputsCheck, setInputsCheck] = useState(initialInputsCheck)
 	const [requestInProgress, setRequestInProgress] = useState(true)
 
@@ -18,9 +20,18 @@ export const SignUp = ({user, renderForm, setRenderForm}) => {
 		if (inputsCheck.name && inputsCheck.email && inputsCheck.password) {
 			// this is a controller
 			requestInProgress &&
-				signUpController(event, setRenderForm, user, setRequestInProgress)
+				signUpController(
+					event,
+					setRenderForm,
+					user,
+					setRequestInProgress,
+					handlerModalData
+				)
 		} else {
-			alert('datos incorrectos')
+			handlerModalData({
+				token: true,
+				principalText: 'Datos incorrectos',
+			})
 		}
 	}
 

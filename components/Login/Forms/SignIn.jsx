@@ -7,12 +7,15 @@ import {UtilContext} from 'context/utilsContext'
 import {useContext} from 'react'
 
 export const SignIn = ({user, renderForm, setRenderForm}) => {
-	const {JWT_TOKEN_NAME} = useContext(UtilContext)
+	const {
+		initialUtilValue: {JWT_TOKEN_NAME},
+		handlerModalData,
+	} = useContext(UtilContext)
 	const router = useRouter()
 
 	const sendUserData = (event) => {
 		event.preventDefault()
-		signInController(user, event, router, JWT_TOKEN_NAME)
+		signInController(user, event, router, JWT_TOKEN_NAME, handlerModalData)
 	}
 	const saveData = (event) => {
 		const input = event.target

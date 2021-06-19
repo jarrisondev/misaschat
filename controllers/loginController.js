@@ -2,7 +2,8 @@ export const signUpController = async (
 	event,
 	setRenderForm,
 	user,
-	setRequestInProgress
+	setRequestInProgress,
+	handlerModalData
 ) => {
 	setRequestInProgress(false)
 	const res = await fetch('/api/sign_up', {
@@ -18,11 +19,22 @@ export const signUpController = async (
 		setRenderForm((r) => !r)
 	} else {
 		setRequestInProgress(true)
-		res.json().then((res) => alert(res.message))
+		res.json().then((res) =>
+			handlerModalData({
+				token: true,
+				principalText: res.message,
+			})
+		)
 	}
 }
 
-export const signInController = async (user, event, router, JWT_TOKEN_NAME) => {
+export const signInController = async (
+	user,
+	event,
+	router,
+	JWT_TOKEN_NAME,
+	handlerModalData
+) => {
 	const res = await fetch('/api/sign_in', {
 		method: 'POST',
 		headers: new Headers([['Content-type', 'application/json']]),
@@ -36,6 +48,11 @@ export const signInController = async (user, event, router, JWT_TOKEN_NAME) => {
 			router.push('/dashboard')
 		})
 	} else {
-		res.json().then((res) => alert(res.message))
+		res.json().then((res) =>
+			handlerModalData({
+				token: true,
+				principalText: res.message,
+			})
+		)
 	}
 }
