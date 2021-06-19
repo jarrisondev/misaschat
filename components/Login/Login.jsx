@@ -6,7 +6,9 @@ import {useRouter} from 'next/router'
 import {UtilContext} from 'context/utilsContext'
 
 export const Login = () => {
-	const {JWT_TOKEN_NAME} = useContext(UtilContext)
+	const {
+		initialUtilValue: {JWT_TOKEN_NAME},
+	} = useContext(UtilContext)
 	const initialUserData = {
 		email: '',
 		name: '',

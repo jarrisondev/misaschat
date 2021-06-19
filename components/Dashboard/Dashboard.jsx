@@ -5,7 +5,9 @@ import {MainStyled} from './styles'
 import {UtilContext} from 'context/utilsContext'
 
 export const Dashboard = () => {
-	const {JWT_TOKEN_NAME} = useContext(UtilContext)
+	const {
+		initialcontextValue: {JWT_TOKEN_NAME},
+	} = useContext(UtilContext)
 	const router = useRouter()
 	const [contacts, setContacts] = useState([])
 
@@ -16,9 +18,8 @@ export const Dashboard = () => {
 
 	useEffect(async () => {
 		const token = JSON.parse(localStorage.getItem(JWT_TOKEN_NAME))
-		await getContactsController(token, router).then((data) => {
-			setContacts(data)
-		})
+		const contacts = await getContactsController(token, router, JWT_TOKEN_NAME)
+		setContacts(contacts)
 	}, [])
 
 	return (
