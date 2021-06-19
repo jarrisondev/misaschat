@@ -1,10 +1,12 @@
 import {LoginStyled} from './styles'
-import {useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {SignIn} from './Forms/SignIn'
 import {SignUp} from './Forms/SignUp'
 import {useRouter} from 'next/router'
+import {UtilContext} from 'context/utilsContext'
 
 export const Login = () => {
+	const {JWT_TOKEN_NAME} = useContext(UtilContext)
 	const initialUserData = {
 		email: '',
 		name: '',
@@ -15,7 +17,7 @@ export const Login = () => {
 	const router = useRouter()
 
 	useEffect(() => {
-		localStorage.getItem('misaschats-login') && router.push('/dashboard')
+		localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
 	}, [])
 	return (
 		<>

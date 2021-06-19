@@ -3,13 +3,16 @@ import {useRouter} from 'next/router'
 import {Button} from 'components/globals-components/Button'
 import {Anchor} from 'components/globals-components/Anchor'
 import {signInController} from 'controllers/loginController'
+import {UtilContext} from 'context/utilsContext'
+import {useContext} from 'react'
 
 export const SignIn = ({user, renderForm, setRenderForm}) => {
+	const {JWT_TOKEN_NAME} = useContext(UtilContext)
 	const router = useRouter()
 
 	const sendUserData = (event) => {
 		event.preventDefault()
-		signInController(user, event, router)
+		signInController(user, event, router, JWT_TOKEN_NAME)
 	}
 	const saveData = (event) => {
 		const input = event.target

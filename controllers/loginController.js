@@ -22,7 +22,7 @@ export const signUpController = async (
 	}
 }
 
-export const signInController = async (user, event, router) => {
+export const signInController = async (user, event, router, JWT_TOKEN_NAME) => {
 	const res = await fetch('/api/sign_in', {
 		method: 'POST',
 		headers: new Headers([['Content-type', 'application/json']]),
@@ -32,7 +32,7 @@ export const signInController = async (user, event, router) => {
 	if (res.ok) {
 		res.json().then((token) => {
 			event.target.parentNode.reset()
-			localStorage.setItem('misaschats-login', JSON.stringify(token))
+			localStorage.setItem(JWT_TOKEN_NAME, JSON.stringify(token))
 			router.push('/dashboard')
 		})
 	} else {
