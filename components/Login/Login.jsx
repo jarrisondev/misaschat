@@ -9,11 +9,13 @@ export const Login = () => {
   const {
     initialUtilValue: { JWT_TOKEN_NAME }
   } = useContext(UtilContext)
+
   const initialUserData = {
     email: '',
     name: '',
     password: ''
   }
+
   const [userData, setUserData] = useState(initialUserData)
   const [renderForm, setRenderForm] = useState(true)
   const router = useRouter()
@@ -24,14 +26,14 @@ export const Login = () => {
   return (
     <>
       <LoginStyled>
-        <div>
-          <h1>Bienvenido a misasChats</h1>
+        <div className='heroContainer'>
+          <h1>Bienvenido a MisasChats</h1>
           <p>
             Aplicación web de mensajería a nivel mundial, registrate y descubre
             todo su potencial.
           </p>
         </div>
-        <div>
+        <div className='formContainer'>
           {renderForm
             ? (
               <SignIn

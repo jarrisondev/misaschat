@@ -1,64 +1,44 @@
 import styled from 'styled-components'
 
 export const FormStyled = styled.form`
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-	justify-content: space-around;
-	width: 80%;
+  width: 90%;
 
-	label {
-		align-items: center;
-		background-color: #fafafa;
-		border-radius: 5px;
-		display: flex;
+  p {
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    text-decoration: underline;
 
-		height: 15%;
-		width: 100%;
+    transform: translate(0, 0);
 
-		img {
-			padding-left: 0.5rem;
-			width: 7%;
-		}
+    &:hover {
+      transform: translate(0, -0.2rem);
+      color: #31ff6c;
+    }
+  }
 
-		input {
-			background-color: transparent;
-			border: none;
-			height: 100%;
-			margin-left: 0.8rem;
+  button {
+    background-color: #31ff6c;
+    border: none;
+    border-radius: 20px;
+    color: white;
 
-			outline: none;
-			width: 93%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 700;
+    height: 2.5rem;
 
-			&::placeholder {
-				font-size: 1.1rem;
-			}
-		}
-	}
+    margin-top: 1.5rem;
+    transition: 0.3s;
+    width: 50%;
 
-	p {
-		font-size: 1.2rem;
-		cursor: pointer;
-		text-decoration: underline;
-	}
-
-	button {
-		background-color: #31ff6c;
-		border: none;
-		border-radius: 20px;
-		color: white;
-
-		cursor: pointer;
-		font-size: 1.2rem;
-		font-weight: 700;
-		height: 13%;
-
-		width: 50%;
-
-		&:hover {
-			background: #11c054;
-		}
-	}
+    &:hover {
+      background: #11c054;
+    }
+  }
 `
