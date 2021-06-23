@@ -10,13 +10,6 @@ export const Login = () => {
     initialUtilValue: { JWT_TOKEN_NAME }
   } = useContext(UtilContext)
 
-  const initialUserData = {
-    email: '',
-    name: '',
-    password: ''
-  }
-
-  const [userData, setUserData] = useState(initialUserData)
   const [renderForm, setRenderForm] = useState(true)
   const router = useRouter()
 
@@ -37,14 +30,12 @@ export const Login = () => {
           {renderForm
             ? (
               <SignIn
-                user={{ userData, setUserData }}
                 renderForm={renderForm}
                 setRenderForm={setRenderForm}
               />
               )
             : (
               <SignUp
-                user={{ userData, setUserData }}
                 renderForm={renderForm}
                 setRenderForm={setRenderForm}
               />

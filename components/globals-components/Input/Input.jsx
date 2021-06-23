@@ -9,8 +9,9 @@ export const Input = ({
   name,
   icon = name,
   pattern,
-  patternText,
-  maxLength = 50
+  patternText = '',
+  maxLength = 50,
+  required = true
 }) => {
   return (
     <InputStyled>
@@ -20,7 +21,7 @@ export const Input = ({
           type={type}
           placeholder={`Ingrese ${placeholder}`}
           maxLength={maxLength}
-          {...register(name, { required: true, pattern: pattern, maxLength })}
+          {...register(name, { required, pattern, maxLength })}
         />
       </div>
       <div className='errorsContainer'>

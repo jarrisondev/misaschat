@@ -1,24 +1,21 @@
 export const signUpController = async (
-  event,
   setRenderForm,
-  user,
+  data,
   setRequestInProgress,
   handlerModalData
 ) => {
-  setRequestInProgress(false)
+  setRequestInProgress(true)
   const res = await window.fetch('/api/sign_up', {
     method: 'POST',
     headers: new window.Headers([['Content-type', 'application/json']]),
-    body: JSON.stringify(user.userData)
+    body: JSON.stringify(data)
   })
 
   if (res.ok) {
-    event.target.parentNode.reset()
-    user.setUserData(user.initialUserData)
-    setRequestInProgress(true)
+    setRequestInProgress(false)
     setRenderForm((r) => !r)
   } else {
-    setRequestInProgress(true)
+    setRequestInProgress(false)
     res.json().then((res) =>
       handlerModalData({
         token: true,
@@ -29,8 +26,7 @@ export const signUpController = async (
 }
 
 export const signInController = async (
-  user,
-  event,
+  data,
   router,
   JWT_TOKEN_NAME,
   handlerModalData
@@ -38,12 +34,11 @@ export const signInController = async (
   const res = await window.fetch('/api/sign_in', {
     method: 'POST',
     headers: new window.Headers([['Content-type', 'application/json']]),
-    body: JSON.stringify(user.userData)
+    body: JSON.stringify(data)
   })
 
   if (res.ok) {
     res.json().then((token) => {
-      event.target.parentNode.reset()
       window.localStorage.setItem(JWT_TOKEN_NAME, JSON.stringify(token))
       router.push('/dashboard')
     })
