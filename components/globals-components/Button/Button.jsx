@@ -1,8 +1,8 @@
-export const Button = ({ renderForm, handler }) => {
+export const Button = ({ renderForm, handler = null }) => {
   const text = renderForm ? 'Ingresar' : 'Registrarse'
 
   return (
-    <button onClick={(event) => handler(event)} type='submit'>
+    <button onClick={(event) => handler ? handler(event) : ' '} type='submit'>
       {text}
     </button>
   )

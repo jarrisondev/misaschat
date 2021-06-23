@@ -6,7 +6,7 @@ import { UtilContext } from 'context/utilsContext'
 
 export const Dashboard = () => {
   const {
-    initialcontextValue: { JWT_TOKEN_NAME }
+    initialUtilValue: { JWT_TOKEN_NAME }
   } = useContext(UtilContext)
   const router = useRouter()
   const [contacts, setContacts] = useState([])
