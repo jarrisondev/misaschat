@@ -1,9 +1,9 @@
-export const Button = ({ renderForm, handler = null }) => {
-  const text = renderForm ? 'Ingresar' : 'Registrarse'
+import { ButtonStyled } from './styles'
 
+export const Button = ({ text, handler = null }) => {
   return (
-    <button onClick={(event) => handler ? handler(event) : ' '} type='submit'>
+    <ButtonStyled onClick={(event) => handler ? handler(event) : ' '} type='submit'>
       {text}
-    </button>
+    </ButtonStyled>
   )
 }

@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 
 export const LayoutStyled = styled.div`
-  background: #11998e;
-  background: linear-gradient(to bottom, #38ef7d, #11998e);
-  height: 100%;
-  max-width: 400px;
-
+  background: #1e1e49;
+  height: 100vh;
+  max-width: 450px;
   min-height: 100vh;
-  position: relative;
+
   width: 100%;
+
+  @media (min-width: 450px) {
+    border-radius: 2rem;
+    height: 48rem;
+    max-width: 25rem;
+    min-height: 48rem;
+  }
 `

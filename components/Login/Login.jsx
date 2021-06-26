@@ -4,6 +4,7 @@ import { SignIn } from './Forms/SignIn'
 import { SignUp } from './Forms/SignUp'
 import { useRouter } from 'next/router'
 import { UtilContext } from 'context/utilsContext'
+import { Button } from 'components/globals-components/Button/Button'
 
 export const Login = () => {
   const {
@@ -19,15 +20,17 @@ export const Login = () => {
   return (
     <>
       <LoginStyled>
+        <img src='/icons/Login/hero.svg' alt='Hero icon' />
         <div className='heroContainer'>
-          <h1>Bienvenido a MisasChats</h1>
-          <p>
-            Aplicación web de mensajería a nivel mundial, registrate y descubre
+          <h1>Hola, bienvenido a <span>MisasChats</span></h1>
+          <p>Aplicación web de mensajería a nivel mundial, registrate y descubre
             todo su potencial.
           </p>
         </div>
-        <div className='formContainer'>
-          {renderForm
+        <div className='buttonContainer'>
+          <Button text='Ingresar' />
+          <Button text='Registrarse' />
+          {/* {renderForm
             ? (
               <SignIn
                 renderForm={renderForm}
@@ -39,7 +42,7 @@ export const Login = () => {
                 renderForm={renderForm}
                 setRenderForm={setRenderForm}
               />
-              )}
+              )} */}
         </div>
       </LoginStyled>
     </>
