@@ -1,5 +1,4 @@
 export const signUpController = async (
-  setRenderForm,
   data,
   setRequestInProgress,
   handlerModalData
@@ -13,7 +12,6 @@ export const signUpController = async (
 
   if (res.ok) {
     setRequestInProgress(false)
-    setRenderForm((r) => !r)
   } else {
     setRequestInProgress(false)
     res.json().then((res) =>

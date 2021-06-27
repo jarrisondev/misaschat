@@ -1,5 +1,5 @@
 import { connectDB } from 'mongoDB/connect'
-import UserModel from 'models/user.model'
+import UserModel from 'mongoDB/models/user.model'
 import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 

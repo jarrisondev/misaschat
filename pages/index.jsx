@@ -1,11 +1,33 @@
-import { Login } from 'components/Login/Login.jsx'
+import { LoginStyled } from 'styles'
+import { useRouter } from 'next/router'
+import { useContext, useEffect } from 'react'
 import { Layout } from 'components/Layout/Layout'
+import { UtilsContext } from 'context/utilsContext'
+import { Button } from 'components/globals-components/Button/Button'
 
-export default function Index () {
+export default function index () {
+  const router = useRouter()
+  const { JWT_TOKEN_NAME } = useContext(UtilsContext)
+
+  useEffect(() => {
+    window.localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
+  }, [])
   return (
     <>
       <Layout>
-        <Login />
+        <LoginStyled>
+          <img src='/icons/Login/hero.svg' alt='Hero icon' />
+          <div className='heroContainer'>
+            <h1>Hola, bienvenido a <span>MisasChats</span></h1>
+            <p>Aplicación web de mensajería a nivel mundial, registrate y descubre
+              todo su potencial.
+            </p>
+          </div>
+          <div className='buttonContainer'>
+            <Button text='Ingresar' handler={() => router.push('/signIn')} />
+            <Button text='Registrarse' handler={() => router.push('/signUp')} />
+          </div>
+        </LoginStyled>
       </Layout>
     </>
   )

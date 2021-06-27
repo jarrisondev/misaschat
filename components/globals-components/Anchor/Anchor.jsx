@@ -1,5 +1,12 @@
-export const Anchor = ({ handler, renderForm }) => {
-  const text = renderForm ? 'Registrarse' : 'Iniciar Sesión'
+import { AnchorStyled } from './styles'
 
-  return <p onClick={() => handler(!renderForm)}>{text}</p>
+export const Anchor = ({ text, imgURL, handler }) => {
+  return (
+    <AnchorStyled onClick={() => handler ? handler() : ' '}>
+      <p>{text}</p>
+      {
+      imgURL && <img src={imgURL} alt='icon' />
+    }
+    </AnchorStyled>
+  )
 }
