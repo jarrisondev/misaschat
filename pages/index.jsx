@@ -19,13 +19,13 @@ export default function index () {
           <img src='/icons/Login/hero.svg' alt='Hero icon' />
           <div className='heroContainer'>
             <h1>Hola, bienvenido a <span>MisasChats</span></h1>
-            <p>Aplicación web de mensajería a nivel mundial, registrate y descubre
+            <p>Aplicación web de mensajería a nivel mundial, regístrate y descubre
               todo su potencial.
             </p>
           </div>
           <div className='buttonContainer'>
             <Button text='Ingresar' handler={() => router.push('/signIn')} />
-            <Button text='Registrarse' handler={() => router.push('/signUp')} />
+            <Button text='Regístrarse' handler={() => router.push('/signUp')} />
           </div>
         </LoginStyled>
       </Layout>

@@ -3,44 +3,33 @@ import styled from 'styled-components'
 export const InputStyled = styled.label`
   width: 100%;
 
-  .inputContainer {
-    align-items: center;
-    background-color: #fafafa;
-    border: 1px solid transparent;
-    border-radius: 5px;
+  input {
+    background-color: #1a1a40;
+    border: 0.1rem solid #45456b;
+    border-radius: 0.9rem;
+    color: #9292bb;
 
-    display: flex;
-    height: 2.5rem;
+    height: 3.5rem;
+    outline: none;
+    padding: 0 1rem;
     width: 100%;
 
-    img {
-      padding-left: 0.5rem;
-      width: 7%;
+    &::placeholder {
+      color: #45456b;
+      font-size: 1.1rem;
     }
 
-    input {
-      background-color: transparent;
-      border: none;
-      height: 100%;
-      margin-left: 0.8rem;
-
-      outline: none;
-      width: 100%;
-
-      &::placeholder {
-        font-size: 1.1rem;
-      }
-    }
-
-    &:focus-within {
-      background-color: #e5f4ff;
-      border: 1px solid #5dbdff;
+    &:focus {
+      border: 0.1rem solid #0056fd;
     }
   }
 
   .errorsContainer {
-    color: red;
-    min-height: 1.8rem;
+    color: #45456b;
+    margin-bottom: 0.5rem;
+    margin-top: 0.2rem;
+    min-height: 0.5rem;
+
     width: 100%;
   }
 `

@@ -1,7 +1,7 @@
 export const signUpController = async (
   data,
   setRequestInProgress,
-  handlerModalData
+  setModal
 ) => {
   setRequestInProgress(true)
   const res = await window.fetch('/api/sign_up', {
@@ -15,7 +15,7 @@ export const signUpController = async (
   } else {
     setRequestInProgress(false)
     res.json().then((res) =>
-      handlerModalData({
+      setModal({
         token: true,
         principalText: res.message
       })
@@ -27,7 +27,7 @@ export const signInController = async (
   data,
   router,
   JWT_TOKEN_NAME,
-  handlerModalData
+  setModal
 ) => {
   const res = await window.fetch('/api/sign_in', {
     method: 'POST',
@@ -42,7 +42,7 @@ export const signInController = async (
     })
   } else {
     res.json().then((res) =>
-      handlerModalData({
+      setModal({
         token: true,
         principalText: res.message
       })

@@ -1,3 +1,4 @@
+import { Button } from '../Button/Button'
 import { ModalStyled } from './styles'
 export const Modal = ({ token, principalText, setVisibility }) => {
   return (
@@ -5,11 +6,13 @@ export const Modal = ({ token, principalText, setVisibility }) => {
       {token && (
         <div>
           <p>{principalText}</p>
-          <button
-            onClick={() => setVisibility((d) => { return { ...d, token: false } })}
-          >
-            Aceptar
-          </button>
+          <Button
+            text='Aceptar'
+            handler={() =>
+              setVisibility((d) => {
+                return { ...d, token: false }
+              })}
+          />
         </div>
       )}
     </ModalStyled>

@@ -1,5 +1,4 @@
 import { createContext, useState } from 'react'
-import { Modal } from 'components/globals-components/Modal/Modal'
 
 export const ModalContext = createContext()
 
@@ -14,11 +13,6 @@ export const ModalContextProvider = ({ children }) => {
   return (
     <ModalContext.Provider value={{ modal, setModal }}>
       {children}
-      <Modal
-        token={modal.token}
-        principalText={modal.principalText}
-        setVisibility={setModal}
-      />
     </ModalContext.Provider>
   )
 }
