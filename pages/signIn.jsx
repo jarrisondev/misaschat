@@ -12,7 +12,7 @@ import { Button } from 'components/globals-components/Button/Button'
 
 export default function signIn () {
   const { JWT_TOKEN_NAME } = useContext(UtilsContext)
-  const setModal = useContext(ModalContext)
+  const { setModal } = useContext(ModalContext)
   const router = useRouter()
   const {
     register,
@@ -27,28 +27,45 @@ export default function signIn () {
   return (
     <Layout>
       <FormStyled onSubmit={handleSubmit(signInUser)}>
-        <Anchor text='Volver' handler={() => router.push('/')} />
-        <h1>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis, assumenda.</h1>
-        <Input
-          register={register}
-          errors={errors}
-          type='email'
-          placeholder='un Correo'
-          name='email'
-          pattern={/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
-          patternText='¡Ingrese un correo valido!'
-        />
-        <Input
-          register={register}
-          errors={errors}
-          type='password'
-          placeholder='una Contraseña'
-          name='password'
-          maxLength={15}
-          pattern={null}
-          patternText=''
-        />
-        <Button text='Ingresar' />
+        <div className='firstSection'>
+          <Anchor
+            imgURL='/icons/Login/back.svg'
+            handler={() => router.push('/')}
+          />
+          <h1>Te habíamos extrañado...</h1>
+          <p>¿Qué esperas para iniciar sesión? Vamos.</p>
+          <div className='inputsContainer'>
+            <Input
+              register={register}
+              errors={errors}
+              type='email'
+              placeholder='un Correo'
+              name='email'
+              pattern={/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
+              patternText='¡Ingrese un correo valido!'
+            />
+            <Input
+              register={register}
+              errors={errors}
+              type='password'
+              placeholder='una Contraseña'
+              name='password'
+              maxLength={15}
+              pattern={null}
+              patternText=''
+            />
+          </div>
+        </div>
+        <div className='secondSection'>
+          <span className='anchor'>
+            <p>¿No tienes cuenta?</p>
+            <Anchor
+              text='Regístrate'
+              handler={() => router.push('signUp')}
+            />
+          </span>
+          <Button text='Ingresar' />
+        </div>
       </FormStyled>
     </Layout>
   )

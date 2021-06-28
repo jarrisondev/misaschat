@@ -21,23 +21,21 @@ export default function signUp () {
 
   const signUpUser = (data) => {
     // this is a controller
-    !requestInProgress &&
-      signUpController(
-        data,
-        setRequestInProgress,
-        setModal
-      )
+    !requestInProgress && signUpController(data, setRequestInProgress, setModal)
   }
 
   return (
     <Layout>
       <FormStyled onSubmit={handleSubmit(signUpUser)}>
         <div className='firstSection'>
-          <Anchor text='Volver' handler={() => router.push('/')} />
-          <h1>Lorem ipsum dolor sit amet.</h1>
+          <Anchor
+            imgURL='/icons/Login/back.svg'
+            handler={() => router.push('/')}
+          />
+          <h1>Empecemos...</h1>
+          <p>Rellena los campos con datos válidos.</p>
           <div className='inputsContainer'>
             <Input
-              icon='user'
               register={register}
               errors={errors}
               placeholder='su Nombre'
@@ -69,8 +67,14 @@ export default function signUp () {
           </div>
         </div>
         <div className='secondSection'>
-          <p>Register now</p>
-          <Button text='Registrarse' />
+          <span className='anchor'>
+            <p>¿Tienes cuenta?</p>
+            <Anchor
+              text='Inicia Sesión'
+              handler={() => router.push('signIn')}
+            />
+          </span>
+          <Button text='Regístrarse' />
         </div>
       </FormStyled>
     </Layout>

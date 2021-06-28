@@ -67,45 +67,62 @@ export const FormStyled = styled.form`
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100%;
+
   justify-content: space-between;
-  height: available;
+  padding: 0 2rem;
 
   .firstSection {
     margin-top: 3rem;
     text-align: left;
-  }
 
-  p {
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-top: 0.8rem;
-    text-decoration: underline;
+    h1 {
+      font-size: 2.5rem;
+    }
 
-    transform: translate(0, 0);
+    p {
+      font-size: 1.7rem;
+      font-weight: 200;
+      line-height: 2.8rem;
+    }
 
-    &:hover {
-      transform: translate(0, -0.2rem);
-      color: #31ff6c;
+    .inputsContainer {
+      margin-top: 2rem;
     }
   }
 
-  button {
-    background-color: #31ff6c;
-    border: none;
-    border-radius: 20px;
-    color: white;
+  .secondSection {
+    margin-top: 2rem;
+    text-align: center;
+    width: 100%;
 
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: 700;
-    height: 2.5rem;
+    .anchor {
+      display: flex;
+      font-size: 1.1rem;
+      justify-content: center;
+      width: 100%;
 
-    margin-top: 1.5rem;
-    transition: 0.3s;
-    width: 50%;
+      div {
+        color: #0056fd;
+        margin-left: 0.5rem;
+        width: max-content;
+      }
+    }
 
-    &:hover {
-      background: #11c054;
+    button {
+      background-color: #0056fd;
+      border: none;
+      border-radius: 1rem;
+      color: white;
+
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: 700;
+      height: 3.5rem;
+      margin: 1rem 0 3rem 0;
+
+      transition: 0.3s;
+      width: 100%;
     }
   }
 `
