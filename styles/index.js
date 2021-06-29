@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const LoginStyled = styled.div`
+export const LoginStyled = styled(motion.div)`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -63,7 +64,7 @@ export const LoginStyled = styled.div`
   }
 `
 
-export const FormStyled = styled.form`
+export const FormStyled = styled(motion.form)`
   align-items: center;
   display: flex;
   flex-direction: column;

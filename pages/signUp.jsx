@@ -2,6 +2,7 @@ import { FormStyled } from 'styles'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useContext, useState } from 'react'
+import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
 import { ModalContext } from 'context/modalContext'
 import { signUpController } from 'controllers/loginController'
@@ -26,7 +27,10 @@ export default function signUp () {
 
   return (
     <Layout>
-      <FormStyled onSubmit={handleSubmit(signUpUser)}>
+      <FormStyled
+        initial='initial' animate='animate' exit='exit' variants={form}
+        onSubmit={handleSubmit(signUpUser)}
+      >
         <div className='firstSection'>
           <Anchor
             imgURL='/icons/Login/back.svg'

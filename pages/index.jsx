@@ -1,6 +1,7 @@
 import { LoginStyled } from 'styles'
 import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
+import { login } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
 import { UtilsContext } from 'context/utilsContext'
 import { Button } from 'components/globals-components/Button/Button'
@@ -15,7 +16,7 @@ export default function index () {
   return (
     <>
       <Layout>
-        <LoginStyled>
+        <LoginStyled initial='initial' animate='animate' exit='exit' variants={login}>
           <img src='/icons/Login/hero.svg' alt='Hero icon' />
           <div className='heroContainer'>
             <h1>Hola, bienvenido a <span>MisasChats</span></h1>

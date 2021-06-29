@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcrypt": "5.0.1",
+    "framer-motion": "4.1.17",
     "jsonwebtoken": "8.5.1",
     "mongoose": "5.12.9",
     "next": "10.0.7",

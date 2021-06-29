@@ -1,5 +1,6 @@
 import 'styles/globals.scss'
 import 'styles/normalize.css'
+import { AnimatePresence } from 'framer-motion'
 import { UtilsContextProvider } from 'context/utilsContext'
 import { ModalContextProvider } from 'context/modalContext'
 
@@ -8,7 +9,9 @@ function MyApp ({ Component, pageProps }) {
     <>
       <UtilsContextProvider>
         <ModalContextProvider>
-          <Component {...pageProps} />
+          <AnimatePresence exitBeforeEnter>
+            <Component {...pageProps} />
+          </AnimatePresence>
         </ModalContextProvider>
       </UtilsContextProvider>
     </>
