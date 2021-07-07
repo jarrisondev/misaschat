@@ -1,4 +1,9 @@
-export const getContactsController = async (token, router, JWT_TOKEN_NAME) => {
+export const getContactsController = async (
+  token,
+  router,
+  JWT_TOKEN_NAME,
+  setModal
+) => {
   const res = await window.fetch('/api/get_contacts', {
     method: 'GET',
     headers: new window.Headers([
@@ -12,10 +17,16 @@ export const getContactsController = async (token, router, JWT_TOKEN_NAME) => {
   } else {
     res.json().then((res) => {
       if (res.err) {
-        window.alert('Unauthorized Token')
+        setModal({
+          token: true,
+          principalText: res.message
+        })
         window.localStorage.removeItem(JWT_TOKEN_NAME)
       } else {
-        window.alert(res.message)
+        setModal({
+          token: true,
+          principalText: res.message
+        })
       }
       router.push('/')
       return []

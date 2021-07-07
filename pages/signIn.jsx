@@ -1,10 +1,10 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { FormStyled } from 'styles'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
-import { UtilsContext } from 'context/utilsContext'
+import { tokenContext } from 'context/tokenContext'
 import { ModalContext } from 'context/modalContext'
 import { signInController } from 'controllers/loginController'
 import { Input } from 'components/globals-components/Input/Input'
@@ -12,7 +12,7 @@ import { Anchor } from 'components/globals-components/Anchor/Anchor'
 import { Button } from 'components/globals-components/Button/Button'
 
 export default function signIn () {
-  const { JWT_TOKEN_NAME } = useContext(UtilsContext)
+  const { JWT_TOKEN_NAME } = useContext(tokenContext)
   const { setModal } = useContext(ModalContext)
   const router = useRouter()
   const {
@@ -25,10 +25,18 @@ export default function signIn () {
   const signInUser = (data) => {
     signInController(data, router, JWT_TOKEN_NAME, setModal)
   }
+  // Check if exists jwt
+  useEffect(() => {
+    window.localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
+  }, [])
+
   return (
     <Layout>
       <FormStyled
-        initial='initial' animate='animate' exit='exit' variants={form}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        variants={form}
         onSubmit={handleSubmit(signInUser)}
       >
         <div className='firstSection'>
@@ -63,10 +71,7 @@ export default function signIn () {
         <div className='secondSection'>
           <span className='anchor'>
             <p>¿No tienes cuenta?</p>
-            <Anchor
-              text='Regístrate'
-              handler={() => router.push('signUp')}
-            />
+            <Anchor text='Regístrate' handler={() => router.push('signUp')} />
           </span>
           <Button text='Ingresar' />
         </div>

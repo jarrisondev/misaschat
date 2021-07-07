@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router'
 import { MainStyled } from 'styles/dashboard'
 import { Layout } from 'components/Layout/Layout'
-import { UtilsContext } from 'context/utilsContext'
+import { tokenContext } from 'context/tokenContext'
+import { ModalContext } from 'context/modalContext'
 import { useContext, useEffect, useState } from 'react'
 import { getContactsController } from 'controllers/dashboardController'
 
 export default function dashboard () {
-  const { JWT_TOKEN_NAME } = useContext(UtilsContext)
+  const { JWT_TOKEN_NAME } = useContext(tokenContext)
+  const { setModal } = useContext(ModalContext)
   const router = useRouter()
   const [contacts, setContacts] = useState([])
 
@@ -17,7 +19,7 @@ export default function dashboard () {
 
   useEffect(async () => {
     const token = JSON.parse(window.localStorage.getItem(JWT_TOKEN_NAME))
-    const contacts = await getContactsController(token, router, JWT_TOKEN_NAME)
+    const contacts = await getContactsController(token, router, JWT_TOKEN_NAME, setModal)
     setContacts(contacts)
   }, [])
 

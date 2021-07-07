@@ -1,10 +1,11 @@
 import { FormStyled } from 'styles'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { useContext, useState } from 'react'
 import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
 import { ModalContext } from 'context/modalContext'
+import { tokenContext } from 'context/tokenContext'
+import { useContext, useEffect, useState } from 'react'
 import { signUpController } from 'controllers/loginController'
 import { Input } from 'components/globals-components/Input/Input'
 import { Anchor } from 'components/globals-components/Anchor/Anchor'
@@ -12,6 +13,7 @@ import { Button } from 'components/globals-components/Button/Button'
 
 export default function signUp () {
   const router = useRouter()
+  const { JWT_TOKEN_NAME } = useContext(tokenContext)
   const { setModal } = useContext(ModalContext)
   const [requestInProgress, setRequestInProgress] = useState(false)
   const {
@@ -24,6 +26,10 @@ export default function signUp () {
     // this is a controller
     !requestInProgress && signUpController(data, setRequestInProgress, setModal)
   }
+  // Check if exists jwt
+  useEffect(() => {
+    window.localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
+  }, [])
 
   return (
     <Layout>

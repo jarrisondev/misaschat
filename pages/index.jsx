@@ -3,12 +3,12 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect } from 'react'
 import { login } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
-import { UtilsContext } from 'context/utilsContext'
+import { tokenContext } from 'context/tokenContext'
 import { Button } from 'components/globals-components/Button/Button'
 
 export default function index () {
   const router = useRouter()
-  const { JWT_TOKEN_NAME } = useContext(UtilsContext)
+  const { JWT_TOKEN_NAME } = useContext(tokenContext)
 
   useEffect(() => {
     window.localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
