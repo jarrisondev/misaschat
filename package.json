@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "eslint": "standard --fix"
   },
   "dependencies": {
     "bcrypt": "5.0.1",
