@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 export const tokenContext = createContext({})
 
-export const tokenContextProvider = ({ children }) => {
+export const TokenContextProvider = ({ children }) => {
   const utils = {
     JWT_TOKEN_NAME: 'misaschats-login'
   }
