@@ -1,7 +1,8 @@
 export const signUpController = async (
   data,
   setRequestInProgress,
-  setModal
+  setModal,
+  router
 ) => {
   setRequestInProgress(true)
   const res = await window.fetch('/api/sign_up', {
@@ -12,6 +13,7 @@ export const signUpController = async (
 
   if (res.ok) {
     setRequestInProgress(false)
+    router.push('/signIn')
   } else {
     setRequestInProgress(false)
     res.json().then((res) =>

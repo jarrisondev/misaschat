@@ -13,6 +13,7 @@ export default function index () {
   useEffect(() => {
     window.localStorage.getItem(JWT_TOKEN_NAME) && router.push('/dashboard')
   }, [])
+
   return (
     <>
       <Layout>

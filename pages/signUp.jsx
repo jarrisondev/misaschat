@@ -24,7 +24,7 @@ export default function signUp () {
 
   const signUpUser = (data) => {
     // this is a controller
-    !requestInProgress && signUpController(data, setRequestInProgress, setModal)
+    !requestInProgress && signUpController(data, setRequestInProgress, setModal, router)
   }
   // Check if exists jwt
   useEffect(() => {
