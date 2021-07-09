@@ -1,31 +1,28 @@
-import UserModel from 'mongoDB/models/user.model'
 import { connection } from 'mongoose'
-import { connectDB } from 'mongoDB/connect'
 import { genSalt, hash } from 'bcrypt'
+import { connectDB } from 'mongoDB/connect'
+import UserModel from 'mongoDB/models/user.model'
 
-export default async function handler (req, res) {
+export default function handler (req, res) {
   if (req.method === 'POST') {
-    await connectDB()
-
     const { name, email, password } = req.body
-    const result = await UserModel.find({ email })
 
-    if (result.length === 0) {
-      const salt = await genSalt(10)
-      const newUser = new UserModel({
-        name,
-        email: email.toLowerCase(),
-        password: await hash(password, salt)
+    connectDB()
+      .then(() => UserModel.find({ email }))
+      .then(async (result) => {
+        if (result.length === 0) {
+          const newUser = new UserModel({
+            name,
+            email: email.toLowerCase(),
+            password: await hash(password, await genSalt(10))
+          })
+          newUser.save().then(() => {
+            connection.close().then(() => console.log('database closed'))
+            res.status(201).json({ message: 'user register successfully' })
+          })
+        } else res.status(406).json({ message: 'user already exists' })
       })
-
-      await newUser.save().then(async () => {
-        await connection.close().then(() => console.log('database closed'))
-        res.status(201).json({ message: 'user register successfully' })
-      })
-    } else {
-      await connection.close().then(() => console.log('database closed'))
-      res.status(406).json({ message: 'user already exists' })
-    }
+      .catch(() => res.status(500).json({ message: 'Internal Server Error' }))
   } else {
     res.status(401).json({ message: 'Only POST method' })
   }
