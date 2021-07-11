@@ -1,17 +1,17 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const MainStyled = styled.main`
+export const MainStyled = styled(motion.main)`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
   height: 100%;
+  justify-content: space-between;
 
   header {
-    margin: 3rem 2rem 0 2rem;
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin: 3rem 2rem 0 2rem;
 
     h2 {
       margin: 0;
@@ -20,23 +20,23 @@ export const MainStyled = styled.main`
     button {
       background-color: transparent;
       border: 0;
-      width: 2rem;
+      width: 1.8rem;
     }
   }
 
   .button-container {
     background-color: #3f3d56;
+    border-radius: 1rem;
     margin: 0 2rem;
     width: max-content;
-    border-radius: 1rem;
 
     button {
       color: white;
-      border-radius: 1rem;
       background-color: #0056fd;
+      border-radius: 1rem;
+      height: 3rem;
 
       width: 7rem;
-      height: 2.5rem;
 
       &:nth-of-type(2) {
         background-color: #3f3d56;
@@ -44,28 +44,35 @@ export const MainStyled = styled.main`
       }
     }
   }
+
   .chats-container {
+    filter: blur(1);
+    height: 28rem;
     margin: 0 2rem;
+    overflow-y: scroll;
+    
     width: auto;
-    height: 30rem;
   }
+
   aside {
+    align-items: center;
     background-color: #1a1a40;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     height: 5rem;
+
+    justify-content: space-between;
+    padding: 0 3rem;
     width: 100%;
-    padding: 0 2rem;
 
     button {
-      color: white;
+      align-items: center;
       background-color: transparent;
+      color: white;
+      cursor: pointer;
+
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      cursor: pointer;
 
       p {
         margin-top: 0.6rem;
@@ -86,12 +93,12 @@ export const MainStyled = styled.main`
     }
 
     button:nth-of-type(2) {
-      width: 2rem;
-      margin-top: -5rem;
-      width: 4rem;
-      height: 4rem;
-      border-radius: 50%;
       background-color: #0056fd;
+      border-radius: 50%;
+      height: 4rem;
+      margin-top: -5rem;
+
+      width: 4rem;
 
       img {
         width: 2.5rem;

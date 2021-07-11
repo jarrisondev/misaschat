@@ -45,3 +45,37 @@ export const login = {
     }
   }
 }
+
+export const dash = {
+  initial: {
+    y: -30,
+    opacity: 0,
+    transition: {
+      duration: 0.42
+    }
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.42
+    }
+  }
+}
+
+export const cardChat = {
+  initial: {
+    y: 30,
+    opacity: 0,
+    transition: {
+      duration: 0.42
+    }
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.42
+    }
+  }
+}
