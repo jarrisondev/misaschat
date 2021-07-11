@@ -19,7 +19,7 @@ export default function getUsers (req, res) {
           res.status(200).json(
             users
               .filter((user) => isvalidate.id !== user.id)
-              .map(({ name, email }) => ({ name, email }))
+              .map(({ name, id }) => ({ name, id }))
           )
         })
         .catch(() => res.status(500).json({ message: 'Internal Server Error' }))
