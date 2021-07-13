@@ -20,7 +20,10 @@ export default function handler (req, res) {
             connection.close().then(() => console.log('database closed'))
             res.status(201).json({ message: 'user register successfully' })
           })
-        } else res.status(406).json({ message: 'user already exists' })
+        } else {
+          connection.close().then(() => console.log('database closed'))
+          res.status(406).json({ message: 'user already exists' })
+        }
       })
       .catch(() => res.status(500).json({ message: 'Internal Server Error' }))
   } else {
