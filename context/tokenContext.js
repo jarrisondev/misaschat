@@ -1,14 +1,10 @@
-import { createContext, useState } from 'react'
+import { createContext } from 'react'
 
 export const tokenContext = createContext({})
 
 export const TokenContextProvider = ({ children }) => {
-  const [token, setToken] = useState(null)
-
   const utils = {
-    JWT_TOKEN_NAME: 'misaschats-login',
-    token,
-    setToken
+    JWT_TOKEN_NAME: 'misaschats-login'
   }
 
   return <tokenContext.Provider value={utils}>{children}</tokenContext.Provider>
