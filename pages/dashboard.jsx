@@ -6,16 +6,15 @@ import { tokenContext } from 'context/tokenContext'
 import { ModalContext } from 'context/modalContext'
 import { Chat } from 'components/Dashboard/Chat/Chat'
 import { useContext, useEffect, useState } from 'react'
+import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
 import { getContactsController } from 'controllers/dashboardController'
-import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 
 export default function dashboard () {
-  const { JWT_TOKEN_NAME, token, setToken } = useContext(tokenContext)
+  const { JWT_TOKEN_NAME } = useContext(tokenContext)
   const { setModal } = useContext(ModalContext)
   const [contacts, setContacts] = useState([])
-  const [renderChat, setRenderChat] = useState(false)
-  const [contact, setContact] = useState(null)
+  const [chat, setChat] = useState(null)
   const router = useRouter()
 
   const SignOut = () => {
@@ -23,24 +22,29 @@ export default function dashboard () {
     router.push('/')
   }
 
+  const getToken = () => {
+    return JSON.parse(window.localStorage.getItem(JWT_TOKEN_NAME))
+  }
+
   useEffect(() => {
-    const token = JSON.parse(window.localStorage.getItem(JWT_TOKEN_NAME))
-    getContactsController(token, router, JWT_TOKEN_NAME, setModal).then((contacts) => {
-      setContacts(contacts)
-      setToken(token)
-    })
+    // this controller need to be in the section: add chat
+    // the new controller return the contact and the last message from chats collection
+    getContactsController(getToken(), router, JWT_TOKEN_NAME, setModal, setContacts)
   }, [])
 
   return (
     <>
       <Layout>
-        {renderChat
-          ? <Chat contact={contact} user={token} setRenderChat={setRenderChat} />
+        {chat
+          ? <Chat chat={chat} setChat={setChat} />
           : (
             <MainStyled initial='initial' animate='animate' variants={dash}>
               <header>
-                <h2>Buenos Días...</h2>
-                <Button handler={SignOut} imgURL='/icons/dashboard/sign-out.svg' />
+                <h2>Buenos Días, <br /> {contacts.user}</h2>
+                <Button
+                  handler={SignOut}
+                  imgURL='/icons/dashboard/sign-out.svg'
+                />
               </header>
               <div className='button-container'>
                 <Button text='Personal' />
@@ -48,16 +52,29 @@ export default function dashboard () {
               </div>
               <div className='chats-container'>
                 {contacts &&
-            contacts.map((contact, i) => {
-              return (
-                <CardChat key={i} contact={contact} user={token} setContact={setContact} setRenderChat={setRenderChat} />
-              )
-            })}
+                contacts?.contacts?.map((contact, i) => {
+                  return (
+                    <CardChat
+                      key={i}
+                      contact={contact}
+                      userToken={getToken}
+                      setChat={setChat}
+                    />
+                  )
+                })}
               </div>
               <aside className='aside'>
-                <Button className='chats-icon' text='chats' imgURL='/icons/dashboard/chat.svg' />
+                <Button
+                  className='chats-icon'
+                  text='chats'
+                  imgURL='/icons/dashboard/chat.svg'
+                />
                 <Button imgURL='/icons/dashboard/plus.svg' />
-                <Button className='profile-icon' text='profile' imgURL='/icons/dashboard/user.svg' />
+                <Button
+                  className='profile-icon'
+                  text='profile'
+                  imgURL='/icons/dashboard/user.svg'
+                />
               </aside>
             </MainStyled>
             )}
