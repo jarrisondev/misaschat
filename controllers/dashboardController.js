@@ -1,11 +1,11 @@
-export const getContactsController = async (
+export const getChatsController = async (
   token,
   router,
   JWT_TOKEN_NAME,
   setModal,
-  setContacts
+  setChats
 ) => {
-  const res = await window.fetch('/api/get_contacts', {
+  const res = await window.fetch('/api/get_chats', {
     method: 'GET',
     headers: new window.Headers([
       ['Content-type', 'application/json'],
@@ -14,7 +14,7 @@ export const getContactsController = async (
   })
 
   if (res.ok) {
-    return res.json().then((res) => setContacts(res))
+    return res.json().then((res) => setChats(res))
   } else {
     res.json().then((res) => {
       if (res.err) {
@@ -32,22 +32,5 @@ export const getContactsController = async (
       router.push('/')
       return []
     })
-  }
-}
-
-export const getChatController = async (contact, token, router, setChat) => {
-  const res = await window.fetch(`/api/get_chat?id=${contact.id}&name=${contact.name}`, {
-    method: 'GET',
-    headers: new window.Headers([
-      ['Content-type', 'application/json'],
-      ['Authorization', `Bearer ${token?.token}`]
-    ])
-  })
-
-  if (res.ok) {
-    return res.json().then((res) => setChat(res))
-  } else {
-    router.push('/')
-    console.log('problem')
   }
 }

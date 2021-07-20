@@ -8,13 +8,13 @@ import { Chat } from 'components/Dashboard/Chat/Chat'
 import { useContext, useEffect, useState } from 'react'
 import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
-import { getContactsController } from 'controllers/dashboardController'
+import { getChatsController } from 'controllers/dashboardController'
 
 export default function dashboard () {
   const { JWT_TOKEN_NAME } = useContext(tokenContext)
   const { setModal } = useContext(ModalContext)
-  const [contacts, setContacts] = useState([])
-  const [chat, setChat] = useState(null)
+  const [listChats, setListChats] = useState({})
+  const [activeChat, setActiveChat] = useState(null)
   const router = useRouter()
 
   const SignOut = () => {
@@ -27,20 +27,18 @@ export default function dashboard () {
   }
 
   useEffect(() => {
-    // this controller need to be in the section: add chat
-    // the new controller return the contact and the last message from chats collection
-    getContactsController(getToken(), router, JWT_TOKEN_NAME, setModal, setContacts)
+    getChatsController(getToken(), router, JWT_TOKEN_NAME, setModal, setListChats)
   }, [])
 
   return (
     <>
       <Layout>
-        {chat
-          ? <Chat chat={chat} setChat={setChat} />
+        {activeChat
+          ? <Chat chat={activeChat} setChat={setActiveChat} />
           : (
             <MainStyled initial='initial' animate='animate' variants={dash}>
               <header>
-                <h2>Buenos Días, <br /> {contacts.user}</h2>
+                <h2>Buenos Días, <br /> {listChats?.chats?.contactName}</h2>
                 <Button
                   handler={SignOut}
                   imgURL='/icons/dashboard/sign-out.svg'
@@ -51,14 +49,12 @@ export default function dashboard () {
                 <Button text='Global' />
               </div>
               <div className='chats-container'>
-                {contacts &&
-                contacts?.contacts?.map((contact, i) => {
+                {listChats && listChats?.chats?.map((chat, i) => {
                   return (
                     <CardChat
                       key={i}
-                      contact={contact}
-                      userToken={getToken}
-                      setChat={setChat}
+                      chat={chat}
+                      setActiveChat={setActiveChat}
                     />
                   )
                 })}

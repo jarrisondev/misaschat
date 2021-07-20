@@ -1,7 +1,7 @@
 import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 import { connectDB } from 'mongoDB/connect'
-import UserModel from 'mongoDB/models/user.model'
+import ChatModel from 'mongoDB/models/chat.model'
 
 export default function getContacts (req, res) {
   if (req.method === 'GET') {
@@ -11,16 +11,15 @@ export default function getContacts (req, res) {
     verify(tokenUser, process.env.JWT_SIGN, (err, decoded) => {
       if (decoded) {
         connectDB()
-          .then(() => UserModel.find({}))
-          .then((users) => {
+          .then(() => ChatModel.find({}))
+          .then((chats) => {
             connection.close().then(() => console.log('database closed'))
 
+            const response = chats.filter((chat) => chat.users.some((user) => user === decoded.id))
             res.status(200).json(
               {
                 user: decoded.name,
-                contacts: users
-                  .filter((user) => decoded.id !== user.id)
-                  .map(({ name, id }) => ({ name, id }))
+                chats: response
               }
             )
           })
