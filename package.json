@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "eslint": "standard --fix"
+    "eslint": "standard --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "bcrypt": "5.0.1",
@@ -22,15 +23,26 @@
   },
   "devDependencies": {
     "babel-plugin-styled-components": "1.12.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-config-prettier": "8.3.0",
+    "husky": "7.0.0",
+    "lint-staged": "11.0.1",
+    "prettier": "2.3.2",
     "standard": "16.0.3"
   },
   "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json",
-    "ignorePatterns": "styles.js"
+    "extends": [
+      "./node_modules/standard/eslintrc.json",
+      "prettier"
+    ]
   },
   "standard": {
     "ignore": [
       "styles.js"
     ]
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "standard --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
