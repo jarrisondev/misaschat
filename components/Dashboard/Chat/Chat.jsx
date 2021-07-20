@@ -13,24 +13,28 @@ export const Chat = ({ chat, setChat }) => {
           <button onClick={goBack}>Volver</button>
           <h2>{chat.contactName}</h2>
         </header>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, delectus.</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+          delectus.
+        </p>
         <div className='chat-content'>
           {chat.messages.map((message) => {
             if (message.me) {
-              return <p />// render the p in rigth
+              return <p /> // render the p in rigth
             } else {
-              return <p />// render the p in left
+              return <p /> // render the p in left
             }
-          }
-          )}
+          })}
         </div>
         <div className='input-content'>
           <input type='text' placeholder='Enviar un Mensaje' />
           <button>
-            <img src='/icons/chat/send-icon.svg' alt='img of a arrow for send' />
+            <img
+              src='/icons/chat/send-icon.svg'
+              alt='img of a arrow for send'
+            />
           </button>
         </div>
-
       </ChatStyled>
     </Layout>
   )

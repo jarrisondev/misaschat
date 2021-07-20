@@ -20,9 +20,7 @@ export const CardChat = ({ chat, setActiveChat }) => {
       >
         <img src='/icons/dashboard/user.png' alt='' />
         <h4>{chat?.contactName}</h4>
-        <p>
-          {chat.messages[chat.messages.length - 1]}
-        </p>
+        <p>{chat.messages[chat.messages.length - 1]}</p>
       </CardChatStyled>
     </>
   )
