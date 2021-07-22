@@ -3,13 +3,10 @@ import { cardChat } from 'styles/variants/variants'
 // import { useRouter } from 'next/router'
 
 export const CardChat = ({ chat, setActiveChat }) => {
-  // const router = useRouter()
-
   const handlerClick = () => {
     setActiveChat(chat)
   }
-  // if lastMessage is true: render this in the p
-  // console.log(chat.messages[chat.messages.length - 1])
+
   return (
     <>
       <CardChatStyled

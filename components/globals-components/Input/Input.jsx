@@ -7,7 +7,7 @@ export const Input = ({
   type = 'text',
   placeholder,
   name,
-  pattern,
+  pattern = null,
   patternText = '',
   maxLength = 50,
   required = true
@@ -20,14 +20,14 @@ export const Input = ({
         maxLength={maxLength}
         {...register(name, { required, pattern, maxLength })}
       />
-      <div className='errorsContainer'>
-        {
-          errors[name]?.type === 'required' && <span>¡El campo no puede estar vacío!</span>
-        }
-        {
-          errors[name]?.type === 'pattern' && <span>{patternText}</span>
-        }
-      </div>
+      {required && (
+        <div className='errorsContainer'>
+          {errors[name]?.type === 'required' && (
+            <span>¡El campo no puede estar vacío!</span>
+          )}
+          {errors[name]?.type === 'pattern' && <span>{patternText}</span>}
+        </div>
+      )}
     </InputStyled>
   )
 }
