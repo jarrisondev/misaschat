@@ -5,6 +5,11 @@ export const ButtonStyled = styled.button`
   cursor: pointer;
   outline: none;
 
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
   &:hover {
     opacity: 0.6;
   }
