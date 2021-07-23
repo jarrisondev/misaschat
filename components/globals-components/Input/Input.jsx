@@ -3,14 +3,15 @@ import { InputStyled } from './styles'
 
 export const Input = ({
   register,
-  errors,
+  errors = null,
   type = 'text',
   placeholder,
   name,
   pattern = null,
   patternText = '',
   maxLength = 50,
-  required = true
+  required = true,
+  warnnings = true
 }) => {
   return (
     <InputStyled>
@@ -20,7 +21,7 @@ export const Input = ({
         maxLength={maxLength}
         {...register(name, { required, pattern, maxLength })}
       />
-      {required && (
+      {warnnings && (
         <div className='errorsContainer'>
           {errors[name]?.type === 'required' && (
             <span>¡El campo no puede estar vacío!</span>
