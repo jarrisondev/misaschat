@@ -1,10 +1,17 @@
 import { CardChatStyled } from './styles'
 import { cardChat } from 'styles/variants/variants'
-// import { useRouter } from 'next/router'
 
-export const CardChat = ({ chat, setActiveChat }) => {
-  const handlerClick = () => {
-    setActiveChat(chat)
+export const CardChat = ({
+  chat = null,
+  user = null,
+  handler,
+  userName = null
+}) => {
+  let name
+  if (chat) {
+    name = chat.names[0] === userName ? chat.names[1] : chat.names[0]
+  } else {
+    name = user.name
   }
 
   return (
@@ -13,11 +20,11 @@ export const CardChat = ({ chat, setActiveChat }) => {
         initial='initial'
         animate='animate'
         variants={cardChat}
-        onClick={() => handlerClick()}
+        onClick={handler}
       >
         <img src='/icons/dashboard/user.png' alt='' />
-        <h4>{chat?.contactName}</h4>
-        <p>{chat.messages[chat.messages.length - 1]}</p>
+        <h4>{name}</h4>
+        <p>{chat?.messages[chat.messages.length - 1]}</p>
       </CardChatStyled>
     </>
   )

@@ -1,9 +1,9 @@
 import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 import { connectDB } from 'mongoDB/connect'
-import ChatModel from 'mongoDB/models/chat.model'
+import UserModel from 'mongoDB/models/user.model'
 
-export default function getContacts (req, res) {
+export default function getUsers (req, res) {
   if (req.method === 'GET') {
     const { authorization } = req.headers
     const tokenUser = authorization.substring(7)
@@ -11,17 +11,17 @@ export default function getContacts (req, res) {
     verify(tokenUser, process.env.JWT_SIGN, (err, decoded) => {
       if (decoded) {
         connectDB()
-          .then(() => ChatModel.find({}))
-          .then((chats) => {
+          .then(() => UserModel.find({}))
+          .then((users) => {
             connection.close().then(() => console.log('database closed'))
 
-            const response = chats.filter((chat) =>
-              chat.users.includes(decoded.id)
-            )
-            res.status(200).json({
-              userName: decoded.name,
-              chats: response
-            })
+            res
+              .status(200)
+              .json(
+                users
+                  .filter((user) => decoded.id !== user.id)
+                  .map(({ name, id }) => ({ name, id }))
+              )
           })
           .catch(() =>
             res.status(500).json({ message: 'Internal Server Error' })

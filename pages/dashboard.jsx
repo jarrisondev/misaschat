@@ -2,49 +2,53 @@ import { useRouter } from 'next/router'
 import { MainStyled } from 'styles/dashboard'
 import { dash } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
-import { tokenContext } from 'context/tokenContext'
 import { ModalContext } from 'context/modalContext'
 import { Chat } from 'components/Dashboard/Chat/Chat'
 import { useContext, useEffect, useState } from 'react'
 import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
-import { getChatsController } from 'controllers/dashboardController'
+import { CreateChat } from 'components/Dashboard/CreateChat/CreateChat'
+import {
+  getChatsController,
+  getUsersController
+} from 'controllers/dashboardController'
 
 export default function dashboard () {
-  const { JWT_TOKEN_NAME } = useContext(tokenContext)
-  const { setModal } = useContext(ModalContext)
-  const [listChats, setListChats] = useState({})
-  const [activeChat, setActiveChat] = useState(null)
   const router = useRouter()
 
+  const { setModal } = useContext(ModalContext)
+
+  const [listChats, setListChats] = useState({})
+  const [listUsers, setListUsers] = useState([])
+  const [activeChat, setActiveChat] = useState(null)
+  const [viewUsers, setViewUsers] = useState(false)
+
+  const userName = listChats?.userName
+
   const SignOut = () => {
-    window.localStorage.removeItem(JWT_TOKEN_NAME)
+    window.localStorage.removeItem(process.env.JWT_TOKEN_NAME)
     router.push('/')
   }
 
-  const getToken = () => {
-    return JSON.parse(window.localStorage.getItem(JWT_TOKEN_NAME))
-  }
-
   useEffect(() => {
-    getChatsController(
-      getToken(),
-      router,
-      JWT_TOKEN_NAME,
-      setModal,
-      setListChats
-    )
+    getChatsController(router, setModal) //
+      .then((chats) => setListChats(chats))
+
+    getUsersController(router, setModal) //
+      .then((users) => setListUsers(users))
   }, [])
 
   return (
     <>
       <Layout>
-        {activeChat && <Chat chat={activeChat} setChat={setActiveChat} />}
-        {!activeChat && (
+        {activeChat && (
+          <Chat chat={activeChat} setChat={setActiveChat} userName={userName} />
+        )}
+        {!activeChat && !viewUsers && (
           <MainStyled initial='initial' animate='animate' variants={dash}>
             <header>
               <h2>
-                Buenos Días, <br /> {listChats?.chats?.contactName}
+                Buenos Días, <br /> {userName}
               </h2>
               <Button
                 handler={SignOut}
@@ -62,7 +66,8 @@ export default function dashboard () {
                     <CardChat
                       key={i}
                       chat={chat}
-                      setActiveChat={setActiveChat}
+                      userName={userName}
+                      handler={() => setActiveChat(chat)}
                     />
                   )
                 })}
@@ -73,7 +78,10 @@ export default function dashboard () {
                 text='chats'
                 imgURL='/icons/dashboard/chat.svg'
               />
-              <Button imgURL='/icons/dashboard/plus.svg' />
+              <Button
+                imgURL='/icons/dashboard/plus.svg'
+                handler={() => setViewUsers(true)}
+              />
               <Button
                 className='profile-icon'
                 text='profile'
@@ -81,6 +89,15 @@ export default function dashboard () {
               />
             </aside>
           </MainStyled>
+        )}
+        {viewUsers && (
+          <CreateChat
+            setChat={setActiveChat}
+            listUsers={listUsers}
+            listChats={listChats.chats}
+            setListChats={setListChats}
+            setViewUsers={setViewUsers}
+          />
         )}
       </Layout>
     </>
