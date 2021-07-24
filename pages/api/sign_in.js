@@ -11,15 +11,20 @@ export default function handler (req, res) {
     connectDB()
       .then(() => UserModel.findOne({ email: email.toLowerCase() }))
       .then((user) => {
+        if (!user) { res.status(401).json({ message: 'Incorrect user or password' }) }
         connection.close().then(() => console.log('database closed'))
         return user
       })
       .then((user) => {
         compare(password, user.password, (err, result) => {
           if (result) {
-            const token = sign({ id: user._id, name: user.name }, process.env.JWT_SIGN, {
-              expiresIn: '31d'
-            })
+            const token = sign(
+              { id: user._id, name: user.name },
+              process.env.JWT_SIGN,
+              {
+                expiresIn: '31d'
+              }
+            )
             res.status(200).json({ token })
           } else {
             res.status(401).json({ message: 'Incorrect user or password', err })
