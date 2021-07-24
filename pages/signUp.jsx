@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
 import { ModalContext } from 'context/modalContext'
-import { tokenContext } from 'context/tokenContext'
 import { useContext, useEffect, useState } from 'react'
 import { signUpController } from 'controllers/loginController'
 import { Input } from 'components/globals-components/Input/Input'
@@ -13,7 +12,7 @@ import { Button } from 'components/globals-components/Button/Button'
 
 export default function signUp () {
   const router = useRouter()
-  const { JWT_TOKEN_NAME } = useContext(tokenContext)
+  const JWT_TOKEN_NAME = process.env.JWT_TOKEN_NAME
   const { setModal } = useContext(ModalContext)
   const [requestInProgress, setRequestInProgress] = useState(false)
   const {
@@ -24,7 +23,8 @@ export default function signUp () {
 
   const signUpUser = (data) => {
     // this is a controller
-    !requestInProgress && signUpController(data, setRequestInProgress, setModal, router)
+    !requestInProgress &&
+      signUpController(data, setRequestInProgress, setModal, router)
   }
   // Check if exists jwt
   useEffect(() => {
@@ -34,7 +34,10 @@ export default function signUp () {
   return (
     <Layout>
       <FormStyled
-        initial='initial' animate='animate' exit='exit' variants={form}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        variants={form}
         onSubmit={handleSubmit(signUpUser)}
       >
         <div className='firstSection'>

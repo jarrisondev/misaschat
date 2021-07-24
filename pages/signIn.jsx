@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
-import { tokenContext } from 'context/tokenContext'
 import { ModalContext } from 'context/modalContext'
 import { signInController } from 'controllers/loginController'
 import { Input } from 'components/globals-components/Input/Input'
@@ -12,7 +11,7 @@ import { Anchor } from 'components/globals-components/Anchor/Anchor'
 import { Button } from 'components/globals-components/Button/Button'
 
 export default function signIn () {
-  const { JWT_TOKEN_NAME } = useContext(tokenContext)
+  const JWT_TOKEN_NAME = process.env.JWT_TOKEN_NAME
   const { setModal } = useContext(ModalContext)
   const router = useRouter()
   const {
