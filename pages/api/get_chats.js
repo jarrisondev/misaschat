@@ -15,15 +15,17 @@ export default function getContacts (req, res) {
           .then((chats) => {
             connection.close().then(() => console.log('database closed'))
 
-            const response = chats.filter((chat) => chat.users.some((user) => user === decoded.id))
-            res.status(200).json(
-              {
-                user: decoded.name,
-                chats: response
-              }
+            const response = chats.filter((chat) =>
+              chat.users.includes(decoded.id)
             )
+            res.status(200).json({
+              user: decoded.name,
+              chats: response
+            })
           })
-          .catch(() => res.status(500).json({ message: 'Internal Server Error' }))
+          .catch(() =>
+            res.status(500).json({ message: 'Internal Server Error' })
+          )
       } else {
         res.status(401).json({ message: 'Unauthorized', err })
       }
