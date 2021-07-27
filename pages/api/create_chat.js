@@ -18,12 +18,14 @@ export default function getChat (req, res) {
               users: [decoded.id, contact.id],
               messages: []
             })
-            newChat.save().then((chat) => {
-              connection
-                .close() //
-                .then(() => console.log('database closed'))
-              res.status(201).json(chat)
-            })
+            newChat
+              .save() //
+              .then((chat) => {
+                connection
+                  .close() //
+                  .then(() => console.log('database closed'))
+                res.status(201).json(chat)
+              })
           })
           .catch(() =>
             res

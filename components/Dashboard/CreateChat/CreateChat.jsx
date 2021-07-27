@@ -10,28 +10,28 @@ import {
 export const CreateChat = ({
   listUsers,
   listChats,
-  setViewUsers,
-  setChat,
+  setCreateUserModal,
+  setActiveChat,
   setListChats
 }) => {
   const router = useRouter()
   const { setModal } = useContext(ModalContext)
 
   const goBack = () => {
-    setViewUsers(false)
+    setCreateUserModal(false)
   }
 
   const createChat = (user) => {
     const chatExists = listChats.filter((chat) => chat.users.includes(user.id))
 
-    if (chatExists.length === 1) {
-      setChat(chatExists[0])
-      setViewUsers(false)
+    if (chatExists) {
+      setActiveChat(chatExists[0])
+      setCreateUserModal(false)
     } else {
       createChatController(router, setModal, user) //
         .then((chat) => {
-          setChat(chat)
-          setViewUsers(false)
+          setActiveChat(chat)
+          setCreateUserModal(false)
 
           getChatsController(router, setModal) //
             .then((chats) => setListChats(chats))

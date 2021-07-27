@@ -16,12 +16,18 @@ export default function handler (req, res) {
             email: email.toLowerCase(),
             password: await hash(password, await genSalt(10))
           })
-          newUser.save().then(() => {
-            connection.close().then(() => console.log('database closed'))
-            res.status(201).json({ message: 'user register successfully' })
-          })
+          newUser
+            .save() //
+            .then(() => {
+              connection
+                .close() //
+                .then(() => console.log('database closed'))
+              res.status(201).json({ message: 'user register successfully' })
+            })
         } else {
-          connection.close().then(() => console.log('database closed'))
+          connection
+            .close() //
+            .then(() => console.log('database closed'))
           res.status(406).json({ message: 'user already exists' })
         }
       })

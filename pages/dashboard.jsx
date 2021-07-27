@@ -21,7 +21,7 @@ export default function dashboard () {
   const [listChats, setListChats] = useState({})
   const [listUsers, setListUsers] = useState([])
   const [activeChat, setActiveChat] = useState(null)
-  const [viewUsers, setViewUsers] = useState(false)
+  const [createUserModal, setCreateUserModal] = useState(false)
 
   const userName = listChats?.userName
 
@@ -44,7 +44,16 @@ export default function dashboard () {
         {activeChat && (
           <Chat chat={activeChat} setChat={setActiveChat} userName={userName} />
         )}
-        {!activeChat && !viewUsers && (
+        {createUserModal && (
+          <CreateChat
+            setActiveChat={setActiveChat}
+            listUsers={listUsers}
+            listChats={listChats.chats}
+            setListChats={setListChats}
+            setCreateUserModal={setCreateUserModal}
+          />
+        )}
+        {!activeChat && !createUserModal && (
           <MainStyled initial='initial' animate='animate' variants={dash}>
             <header>
               <h2>
@@ -80,7 +89,7 @@ export default function dashboard () {
               />
               <Button
                 imgURL='/icons/dashboard/plus.svg'
-                handler={() => setViewUsers(true)}
+                handler={() => setCreateUserModal(true)}
               />
               <Button
                 className='profile-icon'
@@ -89,15 +98,6 @@ export default function dashboard () {
               />
             </aside>
           </MainStyled>
-        )}
-        {viewUsers && (
-          <CreateChat
-            setChat={setActiveChat}
-            listUsers={listUsers}
-            listChats={listChats.chats}
-            setListChats={setListChats}
-            setViewUsers={setViewUsers}
-          />
         )}
       </Layout>
     </>

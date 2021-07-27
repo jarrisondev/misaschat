@@ -14,24 +14,23 @@ export const getChatsController = async (router, setModal) => {
   })
 
   if (res.ok) {
-    return res.json().then((chats) => chats)
+    return res
+      .json() //
+      .then((chats) => chats)
   } else {
-    res.json().then((res) => {
-      if (res.err) {
+    res
+      .json() //
+      .then((res) => {
+        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
         setModal({
           token: true,
           principalText: res.message
         })
-        window.localStorage.removeItem(JWT_TOKEN_NAME)
-      } else {
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-      }
-      router.push('/')
-      return []
-    })
+
+        router.push('/')
+        return []
+      })
   }
 }
 export const getUsersController = async (router, setModal) => {
@@ -44,24 +43,23 @@ export const getUsersController = async (router, setModal) => {
   })
 
   if (res.ok) {
-    return res.json().then((users) => users)
+    return res
+      .json() //
+      .then((users) => users)
   } else {
-    res.json().then((res) => {
-      if (res.err) {
+    res
+      .json() //
+      .then((res) => {
+        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
         setModal({
           token: true,
           principalText: res.message
         })
-        window.localStorage.removeItem(JWT_TOKEN_NAME)
-      } else {
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-      }
-      router.push('/')
-      return []
-    })
+
+        router.push('/')
+        return []
+      })
   }
 }
 
@@ -77,23 +75,22 @@ export const createChatController = async (router, setModal, user) => {
     }
   )
   if (res.ok) {
-    return res.json().then((chat) => chat)
+    return res
+      .json() //
+      .then((chat) => chat)
   } else {
-    res.json().then((res) => {
-      if (res.err) {
+    res
+      .json() //
+      .then((res) => {
+        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
         setModal({
           token: true,
           principalText: res.message
         })
-        window.localStorage.removeItem(JWT_TOKEN_NAME)
-      } else {
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-      }
-      router.push('/')
-      return []
-    })
+
+        router.push('/')
+        return []
+      })
   }
 }

@@ -13,7 +13,9 @@ export default function getContacts (req, res) {
         connectDB()
           .then(() => ChatModel.find({}))
           .then((chats) => {
-            connection.close().then(() => console.log('database closed'))
+            connection
+              .close() //
+              .then(() => console.log('database closed'))
 
             const response = chats.filter((chat) =>
               chat.users.includes(decoded.id)

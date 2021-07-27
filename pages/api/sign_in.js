@@ -11,8 +11,12 @@ export default function handler (req, res) {
     connectDB()
       .then(() => UserModel.findOne({ email: email.toLowerCase() }))
       .then((user) => {
-        if (!user) { res.status(401).json({ message: 'Incorrect user or password' }) }
-        connection.close().then(() => console.log('database closed'))
+        if (!user) {
+          res.status(401).json({ message: 'Incorrect user or password' })
+        }
+        connection
+          .close() //
+          .then(() => console.log('database closed'))
         return user
       })
       .then((user) => {

@@ -13,7 +13,9 @@ export default function getUsers (req, res) {
         connectDB()
           .then(() => UserModel.find({}))
           .then((users) => {
-            connection.close().then(() => console.log('database closed'))
+            connection
+              .close() //
+              .then(() => console.log('database closed'))
 
             res
               .status(200)

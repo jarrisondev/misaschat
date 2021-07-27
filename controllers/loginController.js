@@ -16,12 +16,14 @@ export const signUpController = async (
     router.push('/signIn')
   } else {
     setRequestInProgress(false)
-    res.json().then((res) =>
-      setModal({
-        token: true,
-        principalText: res.message
-      })
-    )
+    res
+      .json() //
+      .then((res) =>
+        setModal({
+          token: true,
+          principalText: res.message
+        })
+      )
   }
 }
 
@@ -38,16 +40,20 @@ export const signInController = async (
   })
 
   if (res.ok) {
-    res.json().then((token) => {
-      window.localStorage.setItem(JWT_TOKEN_NAME, JSON.stringify(token))
-      router.push('/dashboard')
-    })
-  } else {
-    res.json().then((res) =>
-      setModal({
-        token: true,
-        principalText: res.message
+    res
+      .json() //
+      .then((token) => {
+        window.localStorage.setItem(JWT_TOKEN_NAME, JSON.stringify(token))
+        router.push('/dashboard')
       })
-    )
+  } else {
+    res
+      .json() //
+      .then((res) =>
+        setModal({
+          token: true,
+          principalText: res.message
+        })
+      )
   }
 }
