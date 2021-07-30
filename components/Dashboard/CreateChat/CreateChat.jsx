@@ -23,8 +23,7 @@ export const CreateChat = ({
 
   const createChat = (user) => {
     const chatExists = listChats.filter((chat) => chat.users.includes(user.id))
-
-    if (chatExists) {
+    if (chatExists.length === 1) {
       setActiveChat(chatExists[0])
       setCreateUserModal(false)
     } else {
