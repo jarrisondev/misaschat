@@ -30,6 +30,7 @@ export const ChatStyled = styled(motion.section)`
   .chat-content {
     background-size: contain;
     height: 75%;
+    overflow: scroll;
   }
 
   .input-content {

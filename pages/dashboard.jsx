@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client'
 import { useRouter } from 'next/router'
 import { MainStyled } from 'styles/dashboard'
 import { dash } from 'styles/variants/variants'
@@ -15,10 +16,10 @@ import {
 
 export default function dashboard () {
   const router = useRouter()
-
+  const [socket, setSocket] = useState()
   const { setModal } = useContext(ModalContext)
-
   const [listChats, setListChats] = useState({})
+
   const [listUsers, setListUsers] = useState([])
   const [activeChat, setActiveChat] = useState(null)
   const [createUserModal, setCreateUserModal] = useState(false)
@@ -30,19 +31,37 @@ export default function dashboard () {
     router.push('/')
   }
 
-  useEffect(() => {
-    getChatsController(router, setModal) //
-      .then((chats) => setListChats(chats))
+  const getChats = async () => {
+    const chats = await getChatsController(router, setModal)
+    setListChats(chats)
 
-    getUsersController(router, setModal) //
-      .then((users) => setListUsers(users))
+    return chats
+  }
+
+  useEffect(async () => {
+    const socket = io(process.env.SOCKET_IO_URL)
+    const users = await getUsersController(router, setModal)
+    const chats = await getChats()
+
+    chats?.chats?.forEach((chat) => {
+      socket.on(chat._id, () => getChats())
+    })
+
+    setSocket(socket)
+    setListUsers(users)
   }, [])
 
   return (
     <>
       <Layout>
         {activeChat && (
-          <Chat chat={activeChat} setChat={setActiveChat} userName={userName} />
+          <Chat
+            chat={activeChat}
+            setChat={setActiveChat}
+            userName={userName}
+            socket={socket}
+            updateChats={getChats}
+          />
         )}
         {createUserModal && (
           <CreateChat

@@ -1,13 +1,11 @@
 import { ChatStyled } from './styles'
-import { io } from 'socket.io-client'
 import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { Layout } from 'components/Layout/Layout'
 import { Input } from 'components/globals-components/Input/Input'
 import { Button } from 'components/globals-components/Button/Button'
 
-export const Chat = ({ chat, setChat, userName }) => {
-  const [socket, setSocket] = useState()
+export const Chat = ({ chat, setChat, userName, socket, updateChats }) => {
   const [messages, setMessages] = useState(chat.messages)
   const { register, handleSubmit, setValue } = useForm()
   const name = chat.names[0] === userName ? chat.names[1] : chat.names[0]
@@ -20,17 +18,20 @@ export const Chat = ({ chat, setChat, userName }) => {
     setValue('message')
     setMessages((m) => [...m, message.message])
     socket.emit(chat._id, message)
+    updateChats()
   }
 
   useEffect(() => {
-    setSocket(io(process.env.SOCKET_IO_URL))
+    let mounted = true
+    if (mounted) {
+      socket.on(chat._id, (values) => {
+        setMessages((m) => [...m, values.message])
+      })
+    }
+    return () => {
+      mounted = false
+    }
   }, [])
-
-  useEffect(() => {
-    socket?.on(chat._id, (values) => {
-      setMessages((m) => [...m, values.message])
-    })
-  }, [socket])
 
   return (
     <Layout>
@@ -44,7 +45,11 @@ export const Chat = ({ chat, setChat, userName }) => {
             <p key={i}>{message}</p>
           ))}
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className='input-content'>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='input-content'
+          autoComplete='off'
+        >
           <Input
             register={register}
             placeholder='Enviar un Mensaje'

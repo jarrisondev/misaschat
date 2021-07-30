@@ -74,6 +74,7 @@ export const createChatController = async (router, setModal, user) => {
       ])
     }
   )
+
   if (res.ok) {
     return res
       .json() //
