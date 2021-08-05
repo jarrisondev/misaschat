@@ -13,18 +13,33 @@ export default function getChat (req, res) {
       if (decoded) {
         connectDB()
           .then(() => {
-            const newChat = new ChatModel({
-              names: [contact.name, decoded.name],
-              users: [decoded.id, contact.id],
-              messages: []
-            })
-            newChat
-              .save() //
-              .then((chat) => {
-                connection
-                  .close() //
-                  .then(() => console.log('database closed'))
-                res.status(201).json(chat)
+            ChatModel.findOne({
+              $or: [
+                { users: [contact.id, decoded.id] },
+                { users: [decoded.id, contact.id] }
+              ]
+            }) //
+              .then((chats) => {
+                if (!chats) {
+                  const newChat = new ChatModel({
+                    names: [contact.name, decoded.name],
+                    users: [decoded.id, contact.id],
+                    messages: []
+                  })
+                  newChat
+                    .save() //
+                    .then((chat) => {
+                      connection
+                        .close() //
+                        .then(() => console.log('database closed'))
+                      res.status(201).json(chat)
+                    })
+                } else {
+                  connection
+                    .close() //
+                    .then(() => console.log('database closed'))
+                  res.status(201).json(chats)
+                }
               })
           })
           .catch(() =>
