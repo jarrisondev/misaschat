@@ -16,11 +16,10 @@ import {
 
 export default function dashboard () {
   const router = useRouter()
-  const [socket, setSocket] = useState()
+  const [socket, setSocket] = useState(null)
   const { setModal } = useContext(ModalContext)
-  const [listChats, setListChats] = useState({})
-
-  const [listUsers, setListUsers] = useState([])
+  const [listChats, setListChats] = useState(null)
+  const [listUsers, setListUsers] = useState(null)
   const [activeChat, setActiveChat] = useState(null)
   const [createUserModal, setCreateUserModal] = useState(false)
 
@@ -31,24 +30,44 @@ export default function dashboard () {
     router.push('/')
   }
 
-  const getChats = async () => {
-    const chats = await getChatsController(router, setModal)
-    setListChats(chats)
+  const updateListener = (chats, s = socket) => {
+    chats.chats.forEach((chat) => {
+      s.on(chat._id, (data) => {
+        updateMessage(chat, data.message, chats)
+      })
+    })
+  }
 
+  const updateMessage = (chatSeleted, message, listChat = listChats) => {
+    const NewMessagesArray = [...chatSeleted.messages, message]
+    const newChats = listChat.chats.map((chat) => {
+      if (chat._id === chatSeleted._id) chat.messages = NewMessagesArray
+
+      return chat
+    })
+
+    setListChats({
+      userName: listChat.userName,
+      chats: newChats
+    })
+  }
+
+  const getChats = async (s = socket) => {
+    const chats = await getChatsController(router, setModal)
+
+    updateListener(chats, s)
+    setListChats(chats)
     return chats
   }
 
   useEffect(async () => {
     const socket = io(process.env.SOCKET_IO_URL)
     const users = await getUsersController(router, setModal)
-    const chats = await getChats()
-
-    chats?.chats?.forEach((chat) => {
-      socket.on(chat._id, () => getChats())
-    })
+    const chats = await getChats(socket)
 
     setSocket(socket)
     setListUsers(users)
+    socket.on(chats._id, () => getChats(socket))
   }, [])
 
   return (
@@ -60,16 +79,17 @@ export default function dashboard () {
             setChat={setActiveChat}
             userName={userName}
             socket={socket}
-            updateChats={getChats}
+            updateMessage={updateMessage}
           />
         )}
-        {createUserModal && (
+        {createUserModal && listChats && (
           <CreateChat
             setActiveChat={setActiveChat}
-            listUsers={listUsers}
             listChats={listChats.chats}
-            setListChats={setListChats}
+            listUsers={listUsers}
+            getChats={getChats}
             setCreateUserModal={setCreateUserModal}
+            socket={socket}
           />
         )}
         {!activeChat && !createUserModal && (
@@ -88,6 +108,8 @@ export default function dashboard () {
               <Button text='Global' />
             </div>
             <div className='chats-container'>
+              {listChats?.chats.length === 0 && <h1>No tienes ningún chat</h1>}
+
               {listChats &&
                 listChats?.chats?.map((chat, i) => {
                   return (
@@ -99,6 +121,7 @@ export default function dashboard () {
                     />
                   )
                 })}
+              {!listChats && <h1>Aqui va el skeleton</h1>}
             </div>
             <aside className='aside'>
               <Button
