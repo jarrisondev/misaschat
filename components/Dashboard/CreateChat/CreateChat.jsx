@@ -1,17 +1,22 @@
-import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { CardChat } from '../CardChat/CardChat'
 import { ModalContext } from 'context/modalContext'
-import { createChatController } from 'controllers/dashboardController'
+import { useContext, useEffect, useState } from 'react'
+import { ActiveChatContext } from 'context/activeChatContext'
+import {
+  createChatController,
+  getUsersController
+} from 'controllers/dashboardController'
 
 export const CreateChat = ({
-  listUsers,
   listChats,
   setCreateUserModal,
-  setActiveChat,
+  createUserModal,
   getChats,
   socket
 }) => {
+  const { setActiveChat } = useContext(ActiveChatContext)
+  const [listUsers, setListUsers] = useState(null)
   const router = useRouter()
   const { setModal } = useContext(ModalContext)
 
@@ -31,16 +36,25 @@ export const CreateChat = ({
       const [id] = chat.users.filter((id) => id !== chats._id)
       socket.emit(id)
     }
-
     setCreateUserModal(false)
   }
+
+  useEffect(async () => {
+    const users = await getUsersController(router, setModal)
+    setListUsers(users)
+  }, [])
+
   return (
-    <div>
-      <button onClick={goBack}>Go back</button>
-      <div>Selecciona el usuario</div>
-      {listUsers?.map((user, i) => {
-        return <CardChat key={i} user={user} handler={() => createChat(user)} />
-      })}
-    </div>
+    !createUserModal || (
+      <div>
+        <button onClick={goBack}>Go back</button>
+        <div>Selecciona el usuario</div>
+        {listUsers?.map((user, i) => {
+          return (
+            <CardChat key={i} user={user} handler={() => createChat(user)} />
+          )
+        })}
+      </div>
+    )
   )
 }
