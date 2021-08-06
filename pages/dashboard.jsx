@@ -30,25 +30,23 @@ export default function dashboard () {
     router.push('/')
   }
 
-  const updateListener = (chats, s = socket) => {
+  const updateListener = (chats, socket) => {
     chats.chats.forEach((chat) => {
-      s.on(chat._id, (data) => {
+      socket.on(chat._id, (data) => {
         updateMessage(chat, data.message, chats)
       })
     })
   }
 
   const updateMessage = (chatSeleted, message, listChat = listChats) => {
-    const NewMessagesArray = [...chatSeleted.messages, message]
-    const newChats = listChat.chats.map((chat) => {
-      if (chat._id === chatSeleted._id) chat.messages = NewMessagesArray
-
+    const newListChats = listChat.chats.map((chat) => {
+      if (chat._id === chatSeleted._id) chat.messages.push(message)
       return chat
     })
 
     setListChats({
       userName: listChat.userName,
-      chats: newChats
+      chats: newListChats
     })
   }
 
