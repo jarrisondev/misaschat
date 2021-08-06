@@ -7,12 +7,12 @@ export const LayoutStyled = styled.div`
   min-height: 100vh;
 
   position: relative;
-  width: 100%;
+  width: 100vw;
 
   @media (min-width: 450px) {
     border-radius: 2rem;
     height: 48rem;
-    max-width: 26rem;
     min-height: 48rem;
+    width: 26rem;
   }
 `
