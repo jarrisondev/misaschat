@@ -8,8 +8,8 @@ import { Button } from 'components/globals-components/Button/Button'
 export const DashContent = ({
   userName,
   listChats,
-  renderCreateUser,
-  createUserModal
+  createChatModal,
+  renderCreateUser
 }) => {
   const router = useRouter()
   const { activeChat } = useContext(ActiveChatContext)
@@ -21,7 +21,7 @@ export const DashContent = ({
 
   return (
     (activeChat && true) ||
-    createUserModal || (
+    createChatModal || (
       <DashContentStyled>
         <header>
           <h2>

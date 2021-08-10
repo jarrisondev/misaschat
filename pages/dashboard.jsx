@@ -17,11 +17,11 @@ export default function dashboard () {
   const { setModal } = useContext(ModalContext)
 
   const [listChats, setListChats] = useState(null)
-  const [createUserModal, setCreateUserModal] = useState(false)
+  const [createChatModal, setCreateChatModal] = useState(false)
   const userName = listChats?.userName
 
   const updateListener = (chats, socket) => {
-    chats.chats.forEach((chat) => {
+    chats?.chats.forEach((chat) => {
       socket.on(chat._id, (data) => {
         updateMessage(chat, data.message, chats)
       })
@@ -53,7 +53,7 @@ export default function dashboard () {
     const chats = await getChats(socket)
 
     setSocket(socket)
-    socket.on(chats._id, () => getChats(socket))
+    socket.on(chats?._id, () => getChats(socket))
   }, [])
 
   return (
@@ -65,18 +65,18 @@ export default function dashboard () {
             socket={socket}
             updateMessage={updateMessage}
           />
-          <CreateChat
-            listChats={listChats?.chats}
-            createUserModal={createUserModal}
-            getChats={getChats}
-            setCreateUserModal={setCreateUserModal}
-            socket={socket}
-          />
           <DashContent
             userName={userName}
             listChats={listChats}
-            createUserModal={createUserModal}
-            renderCreateUser={setCreateUserModal}
+            createChatModal={createChatModal}
+            renderCreateUser={setCreateChatModal}
+          />
+          <CreateChat
+            listChats={listChats?.chats}
+            createChatModal={createChatModal}
+            getChats={getChats}
+            setCreateChatModal={setCreateChatModal}
+            socket={socket}
           />
         </MainStyled>
       </Layout>
