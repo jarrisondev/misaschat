@@ -10,8 +10,8 @@ import {
 
 export const CreateChat = ({
   listChats,
-  setCreateUserModal,
-  createUserModal,
+  createChatModal,
+  setCreateChatModal,
   getChats,
   socket
 }) => {
@@ -21,7 +21,12 @@ export const CreateChat = ({
   const { setModal } = useContext(ModalContext)
 
   const goBack = () => {
-    setCreateUserModal(false)
+    setCreateChatModal(false)
+  }
+
+  const getUsers = async () => {
+    const users = await getUsersController(router, setModal)
+    setListUsers(users)
   }
 
   const createChat = async (user) => {
@@ -36,16 +41,17 @@ export const CreateChat = ({
       const [id] = chat.users.filter((id) => id !== chats._id)
       socket.emit(id)
     }
-    setCreateUserModal(false)
+    setCreateChatModal(false)
   }
 
-  useEffect(async () => {
-    const users = await getUsersController(router, setModal)
-    setListUsers(users)
-  }, [])
+  useEffect(() => {
+    socket?.on('new-user-created', getUsers)
+  }, [socket])
+
+  useEffect(getUsers, [])
 
   return (
-    !createUserModal || (
+    !createChatModal || (
       <div>
         <button onClick={goBack}>Go back</button>
         <div>Selecciona el usuario</div>
