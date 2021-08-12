@@ -22,7 +22,7 @@ export default function getContacts (req, res) {
             )
             res.status(200).json({
               userName: decoded.name,
-              _id: decoded.id,
+              userId: decoded.id,
               chats: response
             })
           })

@@ -1,18 +1,12 @@
 import { useContext } from 'react'
-import { useRouter } from 'next/router'
 import { DashContentStyled } from './styles'
-import { ActiveChatContext } from 'context/activeChatContext'
+import { DashboardContext } from 'context/dashboardContext'
 import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
 
-export const DashContent = ({
-  userName,
-  listChats,
-  createChatModal,
-  renderCreateUser
-}) => {
-  const router = useRouter()
-  const { activeChat } = useContext(ActiveChatContext)
+export const DashContent = ({ createChatModal, renderCreateUser }) => {
+  const { activeChat, listChats, router, userName } =
+    useContext(DashboardContext)
 
   const SignOut = () => {
     window.localStorage.removeItem(process.env.JWT_TOKEN_NAME)

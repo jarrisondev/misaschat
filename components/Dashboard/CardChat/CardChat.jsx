@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { CardChatStyled } from './styles'
 import { cardChat } from 'styles/variants/variants'
-import { ActiveChatContext } from 'context/activeChatContext'
+import { DashboardContext } from 'context/dashboardContext'
 
 export const CardChat = ({
   chat = null,
@@ -9,8 +9,9 @@ export const CardChat = ({
   handler = null,
   userName = null
 }) => {
-  const { setActiveChat } = useContext(ActiveChatContext)
+  const { setActiveChat } = useContext(DashboardContext)
   const name = chat ? chat.names.find((name) => name !== userName) : user.name
+  const lastMessage = chat?.messages[chat.messages.length - 1]
 
   return (
     <>
@@ -22,7 +23,7 @@ export const CardChat = ({
       >
         <img src='/icons/dashboard/user.png' alt='' />
         <h4>{name}</h4>
-        <p>{chat?.messages[chat.messages.length - 1]}</p>
+        <p>{lastMessage?.textContent}</p>
       </CardChatStyled>
     </>
   )

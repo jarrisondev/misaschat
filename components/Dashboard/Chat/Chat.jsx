@@ -2,14 +2,17 @@ import { useContext } from 'react'
 import { ChatStyled } from './styles'
 import { useForm } from 'react-hook-form'
 import { Layout } from 'components/Layout/Layout'
-import { ActiveChatContext } from 'context/activeChatContext'
+import { DashboardContext } from 'context/dashboardContext'
 import { Input } from 'components/globals-components/Input/Input'
 import { Button } from 'components/globals-components/Button/Button'
 
-export const Chat = ({ userName, socket, updateMessage }) => {
-  const { activeChat, setActiveChat } = useContext(ActiveChatContext)
-  const messages = activeChat?.messages
+export const Chat = () => {
+  const { activeChat, setActiveChat, socket, userName, renderNewMessage } =
+    useContext(DashboardContext)
+
   const { register, handleSubmit, setValue } = useForm()
+
+  const messages = activeChat?.messages
   const name = activeChat?.names.find((name) => name !== userName)
 
   const goBack = () => {
@@ -17,8 +20,8 @@ export const Chat = ({ userName, socket, updateMessage }) => {
   }
 
   const onSubmit = (message) => {
-    setValue('message')
-    updateMessage(activeChat, message.message)
+    setValue('textContent')
+    renderNewMessage(activeChat, message)
     socket.emit(activeChat?._id, message)
   }
 
@@ -32,7 +35,7 @@ export const Chat = ({ userName, socket, updateMessage }) => {
           </header>
           <div className='chat-content'>
             {messages.map((message, i) => (
-              <p key={i}>{message}</p>
+              <p key={i}>{message.textContent}</p>
             ))}
           </div>
           <form
@@ -43,7 +46,7 @@ export const Chat = ({ userName, socket, updateMessage }) => {
             <Input
               register={register}
               placeholder='Enviar un Mensaje'
-              name='message'
+              name='textContent'
               maxLength={500}
               warnnings={false}
             />

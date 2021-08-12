@@ -1,24 +1,17 @@
-import { useRouter } from 'next/router'
 import { CardChat } from '../CardChat/CardChat'
 import { ModalContext } from 'context/modalContext'
 import { useContext, useEffect, useState } from 'react'
-import { ActiveChatContext } from 'context/activeChatContext'
+import { DashboardContext } from 'context/dashboardContext'
 import {
   createChatController,
   getUsersController
 } from 'controllers/dashboardController'
 
-export const CreateChat = ({
-  listChats,
-  createChatModal,
-  setCreateChatModal,
-  getChats,
-  socket
-}) => {
-  const { setActiveChat } = useContext(ActiveChatContext)
-  const [listUsers, setListUsers] = useState(null)
-  const router = useRouter()
+export const CreateChat = ({ createChatModal, setCreateChatModal }) => {
   const { setModal } = useContext(ModalContext)
+  const [listUsers, setListUsers] = useState(null)
+  const { setActiveChat, listChats, socket, router, getChats } =
+    useContext(DashboardContext)
 
   const goBack = () => {
     setCreateChatModal(false)
@@ -30,7 +23,9 @@ export const CreateChat = ({
   }
 
   const createChat = async (user) => {
-    const [chat] = listChats.filter((chat) => chat.users.includes(user.id))
+    const [chat] = listChats?.chats.filter((chat) =>
+      chat.users.includes(user.id)
+    )
 
     if (chat) setActiveChat(chat)
     else {
@@ -38,17 +33,16 @@ export const CreateChat = ({
       const chats = await getChats()
 
       // this is for update the chatList of the other chat-member
-      const [id] = chat.users.filter((id) => id !== chats._id)
+      const [id] = chat.users.filter((id) => id !== chats.userId)
       socket.emit(id)
     }
     setCreateChatModal(false)
   }
 
   useEffect(() => {
-    socket?.on('new-user-created', getUsers)
-  }, [socket])
-
-  useEffect(getUsers, [])
+    getUsers()
+    socket.on('new-user-created', getUsers)
+  }, [])
 
   return (
     !createChatModal || (
