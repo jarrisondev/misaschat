@@ -1,5 +1,4 @@
 import { verify } from 'jsonwebtoken'
-import { connection } from 'mongoose'
 import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
 
@@ -29,15 +28,9 @@ export default function getChat (req, res) {
                   newChat
                     .save() //
                     .then((chat) => {
-                      connection
-                        .close() //
-                        .then(() => console.log('database closed'))
                       res.status(201).json(chat)
                     })
                 } else {
-                  connection
-                    .close() //
-                    .then(() => console.log('database closed'))
                   res.status(201).json(chats)
                 }
               })

@@ -1,4 +1,3 @@
-import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 import { connectDB } from 'mongoDB/connect'
 import UserModel from 'mongoDB/models/user.model'
@@ -13,10 +12,6 @@ export default function getUsers (req, res) {
         connectDB()
           .then(() => UserModel.find({}))
           .then((users) => {
-            connection
-              .close() //
-              .then(() => console.log('database closed'))
-
             res
               .status(200)
               .json(

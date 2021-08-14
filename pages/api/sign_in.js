@@ -22,13 +22,9 @@ export default function handler (req, res) {
       .then((user) => {
         compare(password, user.password, (err, result) => {
           if (result) {
-            const token = sign(
-              { id: user._id, name: user.name },
-              process.env.JWT_SIGN,
-              {
-                expiresIn: '31d'
-              }
-            )
+            const token = sign({ id: user._id }, process.env.JWT_SIGN, {
+              expiresIn: '31d'
+            })
             res.status(200).json({ token })
           } else {
             res.status(401).json({ message: 'Incorrect user or password', err })

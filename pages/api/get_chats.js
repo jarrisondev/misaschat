@@ -1,4 +1,3 @@
-import { connection } from 'mongoose'
 import { verify } from 'jsonwebtoken'
 import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
@@ -13,16 +12,10 @@ export default function getContacts (req, res) {
         connectDB()
           .then(() => ChatModel.find({}))
           .then((chats) => {
-            connection
-              .close() //
-              .then(() => console.log('database closed'))
-
             const response = chats.filter((chat) =>
               chat.users.includes(decoded.id)
             )
             res.status(200).json({
-              userName: decoded.name,
-              userId: decoded.id,
               chats: response
             })
           })
