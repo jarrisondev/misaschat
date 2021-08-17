@@ -5,13 +5,11 @@ import { ModalContextProvider } from 'context/modalContext'
 
 function MyApp ({ Component, pageProps }) {
   return (
-    <>
-      <ModalContextProvider>
-        <AnimatePresence exitBeforeEnter>
-          <Component {...pageProps} />
-        </AnimatePresence>
-      </ModalContextProvider>
-    </>
+    <ModalContextProvider>
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} />
+      </AnimatePresence>
+    </ModalContextProvider>
   )
 }
 
