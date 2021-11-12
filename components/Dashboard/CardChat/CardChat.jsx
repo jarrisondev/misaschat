@@ -1,17 +1,16 @@
-import { useContext } from 'react'
+import { useUser } from 'hooks/useUser'
 import { CardChatStyled } from './styles'
+import { useChats } from 'hooks/useChats'
 import { cardChat } from 'styles/variants/variants'
-import { DashboardContext } from 'context/dashboardContext'
 
-export const CardChat = ({
-  chat = null,
-  user = null,
-  handler = null,
-  userName = null
-}) => {
-  const { setActiveChat } = useContext(DashboardContext)
-  const name = chat ? chat.names.find((name) => name !== userName) : user.name
+export const CardChat = ({ chat = null, contact = null, handler = null }) => {
+  const { user } = useUser()
+  const { setActiveChat } = useChats()
+
   const lastMessage = chat?.messages[chat.messages.length - 1]
+  const name = chat
+    ? chat.names.find((name) => name !== user.name)
+    : contact.name
 
   return (
     <>

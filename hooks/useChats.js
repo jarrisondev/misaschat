@@ -28,6 +28,8 @@ export const useChats = () => {
       ...store,
       chats: chats
     })
+
+    return chats
   }
 
   const setActiveChat = (newState) => {
