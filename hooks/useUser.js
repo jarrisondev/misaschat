@@ -3,7 +3,7 @@ import { DashboardContext } from 'context/dashboardContext'
 import { getUserController } from 'controllers/dashboardController'
 
 export const useUser = () => {
-  const { store, setStore, router } = useContext(DashboardContext)
+  const { store, setStore, router, socket } = useContext(DashboardContext)
 
   const getUser = async () => {
     const user = await getUserController()
@@ -21,6 +21,7 @@ export const useUser = () => {
 
   return {
     user: store.user,
+    socket,
     getUser,
     signOut
   }
