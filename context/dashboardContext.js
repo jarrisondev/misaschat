@@ -1,65 +1,52 @@
 import { io } from 'socket.io-client'
 import { useRouter } from 'next/router'
 import { ModalContext } from './modalContext'
-import { getChatsController } from 'controllers/dashboardController'
 import { createContext, useContext, useEffect, useState } from 'react'
-
-export const DashboardContext = createContext()
+import {
+  getChatsController,
+  getUserController
+} from 'controllers/dashboardController'
 
 const socket = io(process.env.SOCKET_IO_URL)
+export const DashboardContext = createContext()
 
 export const DashboardContextProvider = ({ children }) => {
+  const initialState = {
+    chats: [],
+    user: {},
+    activeChat: null,
+    renderUsersList: false,
+    usersList: null
+  }
+
   const router = useRouter()
   const { setModal } = useContext(ModalContext)
-  const [listChats, setListChats] = useState(null)
-  const [activeChat, setActiveChat] = useState(null)
+  const [store, setStore] = useState(initialState)
 
-  const renderNewMessage = (chatSeleted, message, chats = listChats) => {
-    const newListChats = chats?.chats.map((chat) => {
-      chat._id === chatSeleted._id && chat.messages.push(message)
-      return chat
-    })
-
-    setListChats({
-      userName: chats?.userName,
-      chats: newListChats
-    })
-  }
-
-  const getChats = async () => {
-    const chats = await getChatsController(router, setModal)
-
-    // Listener newsMessages
-    chats?.chats.forEach((chat) => {
-      socket.on(chat._id, (message) => {
-        renderNewMessage(chat, message, chats)
-      })
-    })
-
-    setListChats(chats)
-    return chats
-  }
+  // const renderNewMessage = (chatSeleted, message, chats = listChats) => {
+  //   const newListChats = chats?.chats.map((chat) => {
+  //     chat._id === chatSeleted._id && chat.messages.push(message)
+  //     return chat
+  //   })
 
   useEffect(async () => {
-    const chats = await getChats()
-    const userId = chats?.userId
+    const user = await getUserController()
+    const { chats } = await getChatsController(router, setModal)
 
-    // when is created a chat
-    socket.on(userId, getChats)
+    setStore({
+      ...store,
+      chats: chats,
+      user
+    })
   }, [])
 
   return (
     <DashboardContext.Provider
       value={{
-        activeChat,
-        setActiveChat,
-        listChats,
+        store,
+        setStore,
         socket,
-        router,
-        getChats,
-        setListChats,
-        renderNewMessage,
-        userName: listChats?.userName
+        router
       }}
     >
       {children}
