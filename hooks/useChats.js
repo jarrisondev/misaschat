@@ -1,19 +1,17 @@
 import { useContext } from 'react'
-import { useRouter } from 'next/router'
 import { ModalContext } from 'context/modalContext'
 import { DashboardContext } from 'context/dashboardContext'
 import { getChatsController } from 'controllers/dashboardController'
 
 export const useChats = () => {
-  const router = useRouter()
   const { setModal } = useContext(ModalContext)
-  const { store, setStore } = useContext(DashboardContext)
+  const { store, setStore, router } = useContext(DashboardContext)
 
   const chats = store.chats
   const activeChat = store.activeChat
 
   const renderMessage = (message) => {
-    const newChats = chats?.chats.map((chat) => {
+    const newChats = chats.map((chat) => {
       chat._id === activeChat._id && chat.messages.push(message)
       return chat
     })
@@ -25,17 +23,26 @@ export const useChats = () => {
   }
 
   const getChats = async () => {
-    const res = await getChatsController(router, setModal)
+    const { chats } = await getChatsController(router, setModal)
     setStore({
       ...store,
-      chats: res
+      chats: chats
+    })
+  }
+
+  const setActiveChat = (newState) => {
+    setStore({
+      ...store,
+      activeChat: newState
     })
   }
 
   return {
+    router,
+    chats,
+    activeChat,
     getChats,
     renderMessage,
-    chats,
-    activeChat
+    setActiveChat
   }
 }

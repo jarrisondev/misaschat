@@ -1,9 +1,9 @@
 import { useUser } from 'hooks/useUser'
 import { useChats } from 'hooks/useChats'
 import { DashContentStyled } from './styles'
+import { useListUsers } from 'hooks/useListUsers'
 import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
-import { useListUsers } from 'hooks/useListUsers'
 
 export const DashContent = () => {
   const { user, signOut } = useUser()

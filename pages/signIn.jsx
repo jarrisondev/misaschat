@@ -1,7 +1,7 @@
-import { useContext, useEffect } from 'react'
 import { FormStyled } from 'styles'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useContext, useEffect } from 'react'
 import { form } from 'styles/variants/variants'
 import { Layout } from 'components/Layout/Layout'
 import { ModalContext } from 'context/modalContext'
