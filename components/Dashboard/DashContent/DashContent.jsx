@@ -1,40 +1,37 @@
-import { useContext } from 'react'
+import { useUser } from 'hooks/useUser'
+import { useChats } from 'hooks/useChats'
 import { DashContentStyled } from './styles'
-import { DashboardContext } from 'context/dashboardContext'
 import { CardChat } from 'components/Dashboard/CardChat/CardChat'
 import { Button } from 'components/globals-components/Button/Button'
+import { useListUsers } from 'hooks/useListUsers'
 
-export const DashContent = ({ createChatModal, renderCreateUser }) => {
-  const { activeChat, listChats, router, userName } =
-    useContext(DashboardContext)
-
-  const SignOut = () => {
-    window.localStorage.removeItem(process.env.JWT_TOKEN_NAME)
-    router.push('/')
-  }
+export const DashContent = () => {
+  const { user, signOut } = useUser()
+  const { chats, activeChat } = useChats()
+  const { renderUsersList, handlerUsersList } = useListUsers()
 
   return (
     (activeChat && true) ||
-    createChatModal || (
+    renderUsersList || (
       <DashContentStyled>
         <header>
           <h2>
-            Buenos Días, <br /> {userName}
+            Buenos Días, <br /> {user.name}
           </h2>
-          <Button handler={SignOut} imgURL='/icons/dashboard/sign-out.svg' />
+          <Button handler={signOut} imgURL='/icons/dashboard/sign-out.svg' />
         </header>
         <div className='button-container'>
           <Button text='Personal' />
           <Button text='Global' />
         </div>
         <main className='chats-container'>
-          {listChats?.chats.length === 0 && <h1>No tienes ningún chat</h1>}
+          {chats?.length === 0 && <h1>No tienes ningún chat</h1>}
 
-          {listChats &&
-            listChats?.chats?.map((chat, i) => {
-              return <CardChat key={i} chat={chat} userName={userName} />
+          {chats &&
+            chats?.map((chat, i) => {
+              return <CardChat key={i} chat={chat} />
             })}
-          {!listChats && <h1>Aqui va el skeleton</h1>}
+          {!chats && <h1>Aqui va el skeleton</h1>}
         </main>
         <aside className='aside'>
           <Button
@@ -44,7 +41,7 @@ export const DashContent = ({ createChatModal, renderCreateUser }) => {
           />
           <Button
             imgURL='/icons/dashboard/plus.svg'
-            handler={() => renderCreateUser(true)}
+            handler={() => handlerUsersList(true)}
           />
           <Button
             className='profile-icon'

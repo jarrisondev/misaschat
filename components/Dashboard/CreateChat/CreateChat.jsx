@@ -1,43 +1,16 @@
+import { useEffect } from 'react'
 import { CardChat } from '../CardChat/CardChat'
-import { ModalContext } from 'context/modalContext'
-import { useContext, useEffect, useState } from 'react'
-import { DashboardContext } from 'context/dashboardContext'
-import {
-  createChatController,
-  getUsersController
-} from 'controllers/dashboardController'
+import { useListUsers } from 'hooks/useListUsers'
 
-export const CreateChat = ({ createChatModal, setCreateChatModal }) => {
-  const { setModal } = useContext(ModalContext)
-  const [listUsers, setListUsers] = useState(null)
-  const { setActiveChat, listChats, socket, router, getChats } =
-    useContext(DashboardContext)
-
-  const goBack = () => {
-    setCreateChatModal(false)
-  }
-
-  const getUsers = async () => {
-    const users = await getUsersController(router, setModal)
-    setListUsers(users)
-  }
-
-  const createChat = async (user) => {
-    const [chat] = listChats?.chats.filter((chat) =>
-      chat.users.includes(user.id)
-    )
-
-    if (chat) setActiveChat(chat)
-    else {
-      const chat = await createChatController(router, setModal, user)
-      const chats = await getChats()
-
-      // this is for update the chatList of the other chat-member
-      const [id] = chat.users.filter((id) => id !== chats.userId)
-      socket.emit(id)
-    }
-    setCreateChatModal(false)
-  }
+export const CreateChat = () => {
+  const {
+    getUsers,
+    handlerUsersList,
+    renderUsersList,
+    usersList,
+    socket,
+    createChat
+  } = useListUsers()
 
   useEffect(() => {
     getUsers()
@@ -45,13 +18,17 @@ export const CreateChat = ({ createChatModal, setCreateChatModal }) => {
   }, [])
 
   return (
-    !createChatModal || (
+    !renderUsersList || (
       <div>
-        <button onClick={goBack}>Go back</button>
+        <button onClick={() => handlerUsersList(false)}>Go back</button>
         <div>Selecciona el usuario</div>
-        {listUsers?.map((user, i) => {
+        {usersList?.map((contact, i) => {
           return (
-            <CardChat key={i} user={user} handler={() => createChat(user)} />
+            <CardChat
+              key={i}
+              contact={contact}
+              handler={() => createChat(contact)}
+            />
           )
         })}
       </div>
