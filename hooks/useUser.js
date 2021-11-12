@@ -3,8 +3,7 @@ import { DashboardContext } from 'context/dashboardContext'
 import { getUserController } from 'controllers/dashboardController'
 
 export const useUser = () => {
-  const { store, setStore } = useContext(DashboardContext)
-  const user = store.user
+  const { store, setStore, router } = useContext(DashboardContext)
 
   const getUser = async () => {
     const user = await getUserController()
@@ -15,8 +14,14 @@ export const useUser = () => {
     })
   }
 
+  const signOut = () => {
+    window.localStorage.removeItem(process.env.JWT_TOKEN_NAME)
+    router.push('/')
+  }
+
   return {
-    user,
-    getUser
+    user: store.user,
+    getUser,
+    signOut
   }
 }
