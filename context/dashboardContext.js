@@ -33,11 +33,11 @@ export const DashboardContextProvider = ({ children }) => {
     const user = await getUserController()
     const { chats } = await getChatsController(router, setModal)
 
-    setStore({
+    setStore((store) => ({
       ...store,
       chats: chats,
       user
-    })
+    }))
   }, [])
 
   return (

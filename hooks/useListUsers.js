@@ -29,10 +29,10 @@ export const useListUsers = () => {
       socket.emit(id)
     }
 
-    setStore({
+    setStore((store) => ({
       ...store,
       renderUsersList: false
-    })
+    }))
   }
 
   const getUsers = async () => {
@@ -45,8 +45,8 @@ export const useListUsers = () => {
   }
 
   const handlerUsersList = (newState) => {
-    setStore((state) => ({
-      ...state,
+    setStore((store) => ({
+      ...store,
       renderUsersList: newState
     }))
   }

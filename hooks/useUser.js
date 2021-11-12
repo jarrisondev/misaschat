@@ -8,10 +8,10 @@ export const useUser = () => {
   const getUser = async () => {
     const user = await getUserController()
 
-    setStore({
+    setStore((store) => ({
       ...store,
       user
-    })
+    }))
   }
 
   const signOut = () => {
