@@ -23,12 +23,6 @@ export const DashboardContextProvider = ({ children }) => {
   const { setModal } = useContext(ModalContext)
   const [store, setStore] = useState(initialState)
 
-  // const renderNewMessage = (chatSeleted, message, chats = listChats) => {
-  //   const newListChats = chats?.chats.map((chat) => {
-  //     chat._id === chatSeleted._id && chat.messages.push(message)
-  //     return chat
-  //   })
-
   useEffect(async () => {
     const user = await getUserController()
     const { chats } = await getChatsController(router, setModal)
