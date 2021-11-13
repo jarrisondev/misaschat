@@ -33,6 +33,7 @@ export const getChatsController = async (router, setModal) => {
       })
   }
 }
+
 export const getUsersController = async (router, setModal) => {
   const res = await window.fetch('/api/get_users', {
     method: 'GET',
@@ -92,6 +93,35 @@ export const createChatController = async (router, setModal, user) => {
 
         router.push('/')
         return []
+      })
+  }
+}
+
+export const getUserController = async (router, setModal) => {
+  const res = await window.fetch('/api/get_user', {
+    method: 'GET',
+    headers: new window.Headers([
+      ['Content-type', 'application/json'],
+      ['Authorization', `Bearer ${getToken()}`]
+    ])
+  })
+
+  if (res.ok) {
+    const user = await res.json()
+    return user
+  } else {
+    res
+      .json() //
+      .then((res) => {
+        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
+        setModal({
+          token: true,
+          principalText: res.message
+        })
+
+        router.push('/')
+        return {}
       })
   }
 }
