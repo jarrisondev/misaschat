@@ -2,7 +2,7 @@ import { verify } from 'jsonwebtoken'
 import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
 
-export default function getChat (req, res) {
+export default function createChat (req, res) {
   if (req.method === 'GET') {
     const { authorization } = req.headers
     const tokenUser = authorization.substring(7)
@@ -21,7 +21,6 @@ export default function getChat (req, res) {
               .then((chats) => {
                 if (!chats) {
                   const newChat = new ChatModel({
-                    names: [contact.name, decoded.name],
                     users: [decoded.id, contact.id],
                     messages: []
                   })

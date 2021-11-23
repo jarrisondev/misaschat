@@ -65,16 +65,13 @@ export const getUsersController = async (router, setModal) => {
 }
 
 export const createChatController = async (router, setModal, user) => {
-  const res = await window.fetch(
-    `/api/create_chat?name=${user.name}&id=${user.id}`,
-    {
-      method: 'GET',
-      headers: new window.Headers([
-        ['Content-type', 'application/json'],
-        ['Authorization', `Bearer ${getToken()}`]
-      ])
-    }
-  )
+  const res = await window.fetch(`/api/create_chat?id=${user.id}`, {
+    method: 'GET',
+    headers: new window.Headers([
+      ['Content-type', 'application/json'],
+      ['Authorization', `Bearer ${getToken()}`]
+    ])
+  })
 
   if (res.ok) {
     return res
