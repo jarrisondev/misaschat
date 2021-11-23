@@ -15,8 +15,10 @@ export const DashboardContextProvider = ({ children }) => {
     chats: [],
     user: {},
     activeChat: null,
-    renderUsersList: false,
-    usersList: null
+    usersList: {
+      render: false,
+      list: null
+    }
   }
 
   const router = useRouter()

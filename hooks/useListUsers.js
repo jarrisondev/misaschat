@@ -13,8 +13,8 @@ export const useListUsers = () => {
   const { store, setStore, router, socket } = useContext(DashboardContext)
 
   const chats = store.chats
-  const renderUsersList = store.renderUsersList
-  const usersList = store.usersList
+  const renderUsersList = store.usersList.render
+  const usersList = store.usersList.list
 
   const createChat = async (user) => {
     const [chat] = chats.filter((chat) => chat.users.includes(user.id))
@@ -31,7 +31,10 @@ export const useListUsers = () => {
 
     setStore((store) => ({
       ...store,
-      renderUsersList: false
+      usersList: {
+        ...store.usersList,
+        render: false
+      }
     }))
   }
 
@@ -40,14 +43,20 @@ export const useListUsers = () => {
 
     setStore((store) => ({
       ...store,
-      usersList: users
+      usersList: {
+        ...store.usersList,
+        list: users
+      }
     }))
   }
 
   const handlerUsersList = (newState) => {
     setStore((store) => ({
       ...store,
-      renderUsersList: newState
+      usersList: {
+        ...store.usersList,
+        render: newState
+      }
     }))
   }
 
