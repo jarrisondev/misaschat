@@ -26,7 +26,7 @@ export const DashboardContextProvider = ({ children }) => {
   const [store, setStore] = useState(initialState)
 
   useEffect(async () => {
-    const user = await getUserController()
+    const user = await getUserController(router, setModal)
     const { chats } = await getChatsController(router, setModal)
 
     setStore((store) => ({

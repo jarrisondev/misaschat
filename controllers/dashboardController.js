@@ -122,3 +122,29 @@ export const getUserController = async (router, setModal) => {
       })
   }
 }
+
+export const getContactController = async (contactId, router, setModal) => {
+  const res = await window.fetch(`/api/get_contact?id=${contactId}`, {
+    method: 'GET',
+    headers: new window.Headers([
+      ['Content-type', 'application/json'],
+      ['Authorization', `Bearer ${getToken()}`]
+    ])
+  })
+
+  if (res.ok) {
+    const contact = await res.json()
+    return contact
+  } else {
+    const error = await res.json()
+    if (error.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
+    setModal({
+      token: true,
+      principalText: res.message
+    })
+
+    router.push('/')
+    return null
+  }
+}

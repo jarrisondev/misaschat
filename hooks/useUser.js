@@ -1,17 +1,28 @@
 import { useContext } from 'react'
+import {
+  getContactController,
+  getUserController
+} from 'controllers/dashboardController'
+import { ModalContext } from 'context/modalContext'
 import { DashboardContext } from 'context/dashboardContext'
-import { getUserController } from 'controllers/dashboardController'
 
 export const useUser = () => {
+  const { setModal } = useContext(ModalContext)
   const { store, setStore, router, socket } = useContext(DashboardContext)
 
   const getUser = async () => {
-    const user = await getUserController()
+    const user = await getUserController(router, setModal)
 
     setStore((store) => ({
       ...store,
       user
     }))
+  }
+
+  const getContact = async (contactId, setContact) => {
+    const contact = await getContactController(contactId, router, setModal)
+
+    return setContact(contact.name)
   }
 
   const signOut = () => {
@@ -22,6 +33,7 @@ export const useUser = () => {
   return {
     user: store.user,
     socket,
+    getContact,
     getUser,
     signOut
   }

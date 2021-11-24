@@ -1,6 +1,6 @@
+import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import UserModel from 'mongoDB/models/user.model'
-const { verify } = require('jsonwebtoken')
-const { connectDB } = require('mongoDB/connect')
 
 function getUser (req, res) {
   if (req.method === 'GET') {

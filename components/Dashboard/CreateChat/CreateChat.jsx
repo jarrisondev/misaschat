@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { CardChat } from '../CardChat/CardChat'
 import { useListUsers } from 'hooks/useListUsers'
+import { CreateChatCard } from './CreateChatCard/CreateChatCard'
 
 export const CreateChat = () => {
   const {
@@ -24,7 +24,7 @@ export const CreateChat = () => {
         <div>Selecciona el usuario</div>
         {usersList?.map((contact, i) => {
           return (
-            <CardChat
+            <CreateChatCard
               key={i}
               contact={contact}
               handler={() => createChat(contact)}
