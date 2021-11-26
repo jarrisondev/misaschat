@@ -22,7 +22,7 @@ export const useUser = () => {
   const getContact = async (contactId, setContact) => {
     const contact = await getContactController(contactId, router, setModal)
 
-    return setContact(contact.name)
+    return setContact(contact?.name)
   }
 
   const signOut = () => {

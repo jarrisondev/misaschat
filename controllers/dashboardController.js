@@ -28,7 +28,6 @@ export const getChatsController = async (router, setModal) => {
           principalText: res.message
         })
 
-        router.push('/')
         return []
       })
   }
@@ -58,7 +57,6 @@ export const getUsersController = async (router, setModal) => {
           principalText: res.message
         })
 
-        router.push('/')
         return []
       })
   }
@@ -88,7 +86,6 @@ export const createChatController = async (router, setModal, user) => {
           principalText: res.message
         })
 
-        router.push('/')
         return []
       })
   }
@@ -117,13 +114,14 @@ export const getUserController = async (router, setModal) => {
           principalText: res.message
         })
 
-        router.push('/')
         return {}
       })
   }
 }
 
 export const getContactController = async (contactId, router, setModal) => {
+  if (!contactId) return null
+
   const res = await window.fetch(`/api/get_contact?id=${contactId}`, {
     method: 'GET',
     headers: new window.Headers([
@@ -141,10 +139,9 @@ export const getContactController = async (contactId, router, setModal) => {
 
     setModal({
       token: true,
-      principalText: res.message
+      principalText: error.message
     })
 
-    router.push('/')
     return null
   }
 }
