@@ -1,9 +1,24 @@
+// Functions utils
 const JWT_TOKEN_NAME = process.env.JWT_TOKEN_NAME
 
 const getToken = () => {
   return JSON.parse(window.localStorage.getItem(JWT_TOKEN_NAME))?.token
 }
 
+const handlerErrors = async (res, setModal, valueToReturn = null) => {
+  const error = await res.json()
+  if (error.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+
+  setModal({
+    token: true,
+    principalText: error.message
+  })
+
+  return valueToReturn
+}
+// ---------------
+
+// Controlllers
 export const getChatsController = async (router, setModal) => {
   const res = await window.fetch('/api/get_chats', {
     method: 'GET',
@@ -14,23 +29,9 @@ export const getChatsController = async (router, setModal) => {
   })
 
   if (res.ok) {
-    return res
-      .json() //
-      .then((chats) => chats)
-  } else {
-    res
-      .json() //
-      .then((res) => {
-        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
-
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-
-        return []
-      })
-  }
+    const chats = await res.json()
+    return chats
+  } else handlerErrors(res, setModal, [])
 }
 
 export const getUsersController = async (router, setModal) => {
@@ -43,23 +44,9 @@ export const getUsersController = async (router, setModal) => {
   })
 
   if (res.ok) {
-    return res
-      .json() //
-      .then((users) => users)
-  } else {
-    res
-      .json() //
-      .then((res) => {
-        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
-
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-
-        return []
-      })
-  }
+    const users = await res.json()
+    return users
+  } else handlerErrors(res, setModal, [])
 }
 
 export const createChatController = async (router, setModal, user) => {
@@ -72,23 +59,9 @@ export const createChatController = async (router, setModal, user) => {
   })
 
   if (res.ok) {
-    return res
-      .json() //
-      .then((chat) => chat)
-  } else {
-    res
-      .json() //
-      .then((res) => {
-        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
-
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-
-        return []
-      })
-  }
+    const chatCreated = await res.json()
+    return chatCreated
+  } else handlerErrors(res, setModal, {})
 }
 
 export const getUserController = async (router, setModal) => {
@@ -103,20 +76,7 @@ export const getUserController = async (router, setModal) => {
   if (res.ok) {
     const user = await res.json()
     return user
-  } else {
-    res
-      .json() //
-      .then((res) => {
-        if (res.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
-
-        setModal({
-          token: true,
-          principalText: res.message
-        })
-
-        return {}
-      })
-  }
+  } else handlerErrors(res, setModal)
 }
 
 export const getContactController = async (contactId, router, setModal) => {
@@ -133,15 +93,5 @@ export const getContactController = async (contactId, router, setModal) => {
   if (res.ok) {
     const contact = await res.json()
     return contact
-  } else {
-    const error = await res.json()
-    if (error.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
-
-    setModal({
-      token: true,
-      principalText: error.message
-    })
-
-    return null
-  }
+  } else handlerErrors(res, setModal)
 }

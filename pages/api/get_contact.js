@@ -12,7 +12,7 @@ function getContact (req, res) {
       if (decoded && id) {
         try {
           await connectDB()
-          const contact = await UserModel.findById(id)
+          const contact = await UserModel.findById(id + 123)
 
           if (contact) {
             res.status(200).json({ name: contact.name, id: contact.id })
@@ -21,6 +21,7 @@ function getContact (req, res) {
           }
         } catch (err) {
           console.error(err)
+          res.status(404).json({ message: 'error in the get contact' })
         }
       } else {
         res.status(401).json({ message: 'Unauthorized', err })
