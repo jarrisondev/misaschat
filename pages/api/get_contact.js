@@ -10,12 +10,16 @@ function getContact (req, res) {
 
     verify(tokenUser, process.env.JWT_SIGN, async (err, decoded) => {
       if (decoded) {
-        await connectDB()
-        const contact = await UserModel.findById(id)
-        if (contact) {
-          res.status(200).json({ name: contact.name, id: contact.id })
-        } else {
-          res.status(404).json({ message: 'error in the get user' })
+        try {
+          await connectDB()
+          const contact = await UserModel.findById(id)
+          if (contact) {
+            res.status(200).json({ name: contact.name, id: contact.id })
+          } else {
+            res.status(404).json({ message: 'error in the get user' })
+          }
+        } catch (err) {
+          console.error(err)
         }
       } else {
         res.status(401).json({ message: 'Unauthorized', err })
