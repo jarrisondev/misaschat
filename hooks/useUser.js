@@ -20,9 +20,12 @@ export const useUser = () => {
   }
 
   const getContact = async (contactId, setContact) => {
-    const contact = await getContactController(contactId, router, setModal)
-
-    if (!contact) setContact(contact?.name)
+    try {
+      const contact = await getContactController(contactId, setModal)
+      if (contact) setContact(contact.name)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const signOut = () => {

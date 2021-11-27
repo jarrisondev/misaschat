@@ -12,7 +12,7 @@ function getContact (req, res) {
       if (decoded && id) {
         try {
           await connectDB()
-          const contact = await UserModel.findById(id + 123)
+          const contact = await UserModel.findById(id)
 
           if (contact) {
             res.status(200).json({ name: contact.name, id: contact.id })

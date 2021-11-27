@@ -84,7 +84,7 @@ export const getUserController = async (setModal) => {
   } else handlerErrors(res, setModal)
 }
 
-export const getContactController = async (contactId, router, setModal) => {
+export const getContactController = async (contactId, setModal) => {
   if (!contactId) return null
 
   const res = await window.fetch(`/api/get_contact?id=${contactId}`, {
