@@ -1,3 +1,5 @@
+import router from 'next/router'
+
 // Functions utils
 const JWT_TOKEN_NAME = process.env.JWT_TOKEN_NAME
 
@@ -7,7 +9,10 @@ const getToken = () => {
 
 const handlerErrors = async (res, setModal, valueToReturn = null) => {
   const error = await res.json()
-  if (error.err) window.localStorage.removeItem(JWT_TOKEN_NAME)
+  if (error.err) {
+    window.localStorage.removeItem(JWT_TOKEN_NAME)
+    router.push('/')
+  }
 
   setModal({
     token: true,
@@ -19,7 +24,7 @@ const handlerErrors = async (res, setModal, valueToReturn = null) => {
 // ---------------
 
 // Controlllers
-export const getChatsController = async (router, setModal) => {
+export const getChatsController = async (setModal) => {
   const res = await window.fetch('/api/get_chats', {
     method: 'GET',
     headers: new window.Headers([
@@ -34,7 +39,7 @@ export const getChatsController = async (router, setModal) => {
   } else handlerErrors(res, setModal, [])
 }
 
-export const getUsersController = async (router, setModal) => {
+export const getUsersController = async (setModal) => {
   const res = await window.fetch('/api/get_users', {
     method: 'GET',
     headers: new window.Headers([
@@ -49,7 +54,7 @@ export const getUsersController = async (router, setModal) => {
   } else handlerErrors(res, setModal, [])
 }
 
-export const createChatController = async (router, setModal, user) => {
+export const createChatController = async (setModal, user) => {
   const res = await window.fetch(`/api/create_chat?id=${user.id}`, {
     method: 'GET',
     headers: new window.Headers([
@@ -64,7 +69,7 @@ export const createChatController = async (router, setModal, user) => {
   } else handlerErrors(res, setModal, {})
 }
 
-export const getUserController = async (router, setModal) => {
+export const getUserController = async (setModal) => {
   const res = await window.fetch('/api/get_user', {
     method: 'GET',
     headers: new window.Headers([

@@ -11,7 +11,7 @@ export const useUser = () => {
   const { store, setStore, router, socket } = useContext(DashboardContext)
 
   const getUser = async () => {
-    const user = await getUserController(router, setModal)
+    const user = await getUserController(setModal)
 
     setStore((store) => ({
       ...store,

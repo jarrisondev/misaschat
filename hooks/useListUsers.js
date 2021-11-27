@@ -10,7 +10,7 @@ import {
 export const useListUsers = () => {
   const { setModal } = useContext(ModalContext)
   const { setActiveChat, getChats } = useChats()
-  const { store, setStore, router, socket } = useContext(DashboardContext)
+  const { store, setStore, socket } = useContext(DashboardContext)
 
   const chats = store.chats
   const renderUsersList = store.usersList.render
@@ -21,7 +21,7 @@ export const useListUsers = () => {
 
     if (chat) setActiveChat(chat)
     else {
-      const NewChat = await createChatController(router, setModal, user)
+      const NewChat = await createChatController(setModal, user)
       const chats = await getChats()
 
       // this is for update the chatList of the other chat-member
@@ -39,7 +39,7 @@ export const useListUsers = () => {
   }
 
   const getUsers = async () => {
-    const users = await getUsersController(router, setModal)
+    const users = await getUsersController(setModal)
 
     setStore((store) => ({
       ...store,

@@ -16,27 +16,27 @@ export const useChats = () => {
       return chat
     })
 
-    setStore({
+    setStore((store) => ({
       ...store,
       chats: newChats
-    })
+    }))
   }
 
   const getChats = async () => {
-    const { chats } = await getChatsController(router, setModal)
-    setStore({
+    const { chats } = await getChatsController(setModal)
+    setStore((store) => ({
       ...store,
       chats: chats
-    })
+    }))
 
     return chats
   }
 
   const setActiveChat = (newState) => {
-    setStore({
+    setStore((store) => ({
       ...store,
       activeChat: newState
-    })
+    }))
   }
 
   return {
