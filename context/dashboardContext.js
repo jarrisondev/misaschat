@@ -26,14 +26,20 @@ export const DashboardContextProvider = ({ children }) => {
   const [store, setStore] = useState(initialState)
 
   useEffect(async () => {
-    const user = await getUserController(router, setModal)
-    const { chats } = await getChatsController(router, setModal)
+    ;(async () => {
+      try {
+        const user = await getUserController(router, setModal)
+        const { chats } = await getChatsController(router, setModal)
 
-    setStore((store) => ({
-      ...store,
-      chats: chats,
-      user
-    }))
+        setStore((store) => ({
+          ...store,
+          chats: chats,
+          user
+        }))
+      } catch (err) {
+        console.error(err)
+      }
+    })()
   }, [])
 
   return (
