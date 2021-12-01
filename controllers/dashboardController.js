@@ -83,20 +83,3 @@ export const getUserController = async (setModal) => {
     return user
   } else handlerErrors(res, setModal)
 }
-
-export const getContactController = async (contactId, setModal) => {
-  if (!contactId) return null
-
-  const res = await window.fetch(`/api/get_contact?id=${contactId}`, {
-    method: 'GET',
-    headers: new window.Headers([
-      ['Content-type', 'application/json'],
-      ['Authorization', `Bearer ${getToken()}`]
-    ])
-  })
-
-  if (res.ok) {
-    const contact = await res.json()
-    return contact
-  } else handlerErrors(res, setModal)
-}

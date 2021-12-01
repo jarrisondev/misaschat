@@ -1,10 +1,7 @@
 import { useContext } from 'react'
-import {
-  getContactController,
-  getUserController
-} from 'controllers/dashboardController'
 import { ModalContext } from 'context/modalContext'
 import { DashboardContext } from 'context/dashboardContext'
+import { getUserController } from 'controllers/dashboardController'
 
 export const useUser = () => {
   const { setModal } = useContext(ModalContext)
@@ -19,24 +16,14 @@ export const useUser = () => {
     }))
   }
 
-  const getContact = async (contactId, setContact) => {
-    try {
-      const contact = await getContactController(contactId, setModal)
-      if (contact) setContact(contact.name)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   const signOut = () => {
     window.localStorage.removeItem(process.env.JWT_TOKEN_NAME)
     router.push('/')
   }
 
   return {
-    user: store.user,
     socket,
-    getContact,
+    user: store.user,
     getUser,
     signOut
   }
