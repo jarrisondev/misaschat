@@ -7,9 +7,18 @@ export const connectDB = async () => {
       useUnifiedTopology: true
     })
     .then(() => {
-      console.log('database connect')
+      console.info('database connect')
     })
     .catch((err) => {
-      console.log(err)
+      console.error(err)
     })
+}
+
+export const closeDB = async () => {
+  try {
+    await mongoose.connection.close()
+    console.info('dabase close')
+  } catch (err) {
+    console.error(err)
+  }
 }
