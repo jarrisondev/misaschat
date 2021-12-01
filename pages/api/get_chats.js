@@ -1,6 +1,7 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
-import { closeDB, connectDB } from 'mongoDB/connect'
+import UserModel from 'mongoDB/models/user.model'
 
 export default function getContacts (req, res) {
   if (req.method === 'GET') {
@@ -16,14 +17,27 @@ export default function getContacts (req, res) {
             chat.users.includes(decoded.id)
           )
 
+          const chatsWithContactData = await Promise.all(
+            chatsWithUser.map(async (chat) => {
+              const [id] = chat.users.filter((id) => id !== decoded.id)
+              const contactData = await UserModel.findById(id)
+
+              return {
+                _id: chat._id,
+                users: chat.users,
+                messages: chat.messages,
+                contactName: contactData.name
+              }
+            })
+          )
+
           res.status(200).json({
-            chats: chatsWithUser
+            chats: chatsWithContactData
           })
         } catch (err) {
           console.error(err)
           res.status(500).json({ message: 'error in the get chats' })
         }
-        await closeDB()
       } else {
         res.status(401).json({ message: 'Unauthorized', err })
       }
