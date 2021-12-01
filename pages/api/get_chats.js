@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
 import UserModel from 'mongoDB/models/user.model'
-import { connectDB, closeDB } from 'mongoDB/connect'
 
 export default function getContacts (req, res) {
   if (req.method === 'GET') {
@@ -34,7 +34,6 @@ export default function getContacts (req, res) {
           res.status(200).json({
             chats: chatsWithContactData
           })
-          await closeDB()
         } catch (err) {
           console.error(err)
           res.status(500).json({ message: 'error in the get chats' })

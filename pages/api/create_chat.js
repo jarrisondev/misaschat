@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import ChatModel from 'mongoDB/models/chat.model'
-import { closeDB, connectDB } from 'mongoDB/connect'
 
 export default function createChat (req, res) {
   if (req.method === 'GET') {
@@ -30,7 +30,6 @@ export default function createChat (req, res) {
             await newChat.save()
             res.status(201).json(newChat)
           }
-          await closeDB()
         } catch (err) {
           console.error(err)
           res.status(400).json({ message: 'Error in the create chat' })

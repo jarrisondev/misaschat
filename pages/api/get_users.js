@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import UserModel from 'mongoDB/models/user.model'
-import { closeDB, connectDB } from 'mongoDB/connect'
 
 export default function getUsers (req, res) {
   if (req.method === 'GET') {
@@ -17,7 +17,6 @@ export default function getUsers (req, res) {
             .map(({ name, id }) => ({ name, id }))
 
           res.status(200).json(allUsersFilter)
-          await closeDB()
         } catch (err) {
           console.error(err)
           res.status(500).json({ message: 'Error in the get user' })

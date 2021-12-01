@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import UserModel from 'mongoDB/models/user.model'
-import { closeDB, connectDB } from 'mongoDB/connect'
 
 function getUser (req, res) {
   if (req.method === 'GET') {
@@ -13,7 +13,6 @@ function getUser (req, res) {
           await connectDB()
           const user = await UserModel.findById(decoded.id)
           res.status(200).json({ name: user.name, id: user._id })
-          await closeDB()
         } catch (err) {
           console.error(err)
           res.status(401).json({ message: 'error for get the user' })

@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken'
+import { connectDB } from 'mongoDB/connect'
 import UserModel from 'mongoDB/models/user.model'
-import { closeDB, connectDB } from 'mongoDB/connect'
 
 function getContact (req, res) {
   if (req.method === 'GET') {
@@ -19,8 +19,6 @@ function getContact (req, res) {
           } else {
             res.status(404).json({ message: 'error in the get contact' })
           }
-
-          await closeDB()
         } catch (err) {
           console.error(err)
           res.status(404).json({ message: 'error in the get contact' })
